@@ -6,5 +6,5 @@
 # http://polymer.github.io/PATENTS.txt
 
 import 'artifacts/HelloWorld/recipes.manifest'
-import 'artifacts/Restaurants/recipes.manifest'
-import 'artifacts/Accounts/recipes.manifest'
+#import 'artifacts/Restaurants/recipes.manifest'
+#import 'artifacts/Accounts/recipes.manifest'

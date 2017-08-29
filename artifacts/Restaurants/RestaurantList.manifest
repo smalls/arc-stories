@@ -9,6 +9,7 @@
 import 'Restaurant.manifest'
 
 particle RestaurantList in 'RestaurantList.js'
-  RestaurantList(in [Restaurant] list, in [Restaurant] selected)
+  RestaurantList(in [Restaurant] list, inout [Restaurant] selected)
+  affordance dom
   consume master
   description `Show ${list}`

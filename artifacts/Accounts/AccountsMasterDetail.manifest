@@ -10,6 +10,7 @@ import 'Account.manifest'
 
 particle AccountsMasterDetail in '../Things/MasterDetail.js'
   AccountsMasterDetail(in [Account] list, in [Account] selected)
+  affordance dom
   consume root
     provide master
       view list

@@ -10,5 +10,6 @@ import 'https://$cdn/entities/Person.manifest'
 
 particle PersonalGreet in 'PersonalGreet.js'
   PersonalGreet(in Person person)
+  affordance dom
   consume customgreeting
   description `Greetings to you`

@@ -9,7 +9,8 @@
 import 'Restaurant.manifest'
 
 particle FindRestaurants in 'FindRestaurants.js'
-  FindRestaurants(in [Restaurant] list)
+  FindRestaurants(inout [Restaurant] list)
+  affordance dom
   consume root
     provide masterdetail
       view list

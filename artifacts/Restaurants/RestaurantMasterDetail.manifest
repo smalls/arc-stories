@@ -9,7 +9,8 @@
 import 'Restaurant.manifest'
 
 particle RestaurantMasterDetail in '../Things/MasterDetail.js'
-  RestaurantMasterDetail(in [Restaurant] list, in [Restaurant] selected)
+  RestaurantMasterDetail(in [Restaurant] list, inout [Restaurant] selected)
+  affordance dom
   consume masterdetail
     provide master
       view list

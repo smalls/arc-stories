@@ -10,6 +10,7 @@ import 'Restaurant.manifest'
 
 particle RestaurantDetail in 'RestaurantDetail.js'
   RestaurantDetail(in [Restaurant] selected)
+  affordance dom
   consume detail
     provide action
   description `Restaurant details`

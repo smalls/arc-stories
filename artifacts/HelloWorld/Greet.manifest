@@ -10,6 +10,7 @@ import 'Message.manifest'
 
 particle Greet in 'Greet.js'
   Greet(in Message greeting)
+  affordance dom
   consume root
     provide customgreeting
   description `Hello`
