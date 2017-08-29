@@ -6,11 +6,11 @@
 # subject to an additional IP rights grant found at
 # http://polymer.github.io/PATENTS.txt
 
-import 'Restaurant.manifest'
+import 'Account.manifest'
 
-particle MasterDetail in 'MasterDetail.js'
-  MasterDetail(in [Restaurant] list, in [Restaurant] selected)
-  consume masterdetail
+particle AccountsMasterDetail in '../Things/MasterDetail.js'
+  AccountsMasterDetail(in [Account] list, in [Account] selected)
+  consume root
     provide master
       view list
     provide detail

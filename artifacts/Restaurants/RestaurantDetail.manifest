@@ -8,7 +8,8 @@
 
 import 'Restaurant.manifest'
 
-particle Master in 'Master.js'
-  Master(in [Restaurant] list, in [Restaurant] selected)
-  consume master
-  description `Show ${list}`
+particle RestaurantDetail in 'RestaurantDetail.js'
+  RestaurantDetail(in [Restaurant] selected)
+  consume detail
+    provide action
+  description `Restaurant details`

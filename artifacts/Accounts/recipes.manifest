@@ -5,14 +5,14 @@
 # subject to an additional IP rights grant found at
 # http://polymer.github.io/PATENTS.txt
 
-import 'MasterDetail.manifest'
-import 'Master.manifest'
-import 'Detail.manifest'
+import 'AccountsMasterDetail.manifest'
+import 'AccountsMaster.manifest'
+import 'AccountsDetail.manifest'
 
 recipe
-  MasterDetail.list -> Master.list
-  Master.selected -> MasterDetail.selected
-  Detail.selected -> Master.selected
+  AccountsMasterDetail.list -> AccountsMaster.list
+  AccountsMaster.selected -> AccountsMasterDetail.selected
+  AccountsDetail.selected -> AccountsMaster.selected
 
 import 'Account.manifest'
 view Accounts of [Account] in 'accounts.json'

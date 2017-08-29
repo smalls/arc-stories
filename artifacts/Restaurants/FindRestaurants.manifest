@@ -13,4 +13,4 @@ particle FindRestaurants in 'FindRestaurants.js'
   consume root
     provide masterdetail
       view list
-  description `Fetch ${list}`
+  description `Find local restaurants`

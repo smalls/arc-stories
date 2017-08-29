@@ -9,27 +9,20 @@
 "use strict";
 
 defineParticle(({ DomParticle, resolver}) => {
+
+  let host = `find-restaurants`;
+
+  let template = `
+<div ${host}>
+  <div hidden="{{complete}}" style="padding: 4px;">finding restaurants...</div>
+  <div slotid="masterdetail"></div>
+</div>
+
+  `.trim();
+
   let service = `https://xenonjs.com/services/http/php`;
   let placesService =`${service}/places.php`;
   let photoService = `${service}/place-photo.php`;
-
-  let host = `[find-restaurants]`;
-  let template = `
-
-<h3>Find Restaurants</h3>
-<div slotid="masterdetail"></div>
-<x-list items="{{places}}">
-  <template>
-    <div style="padding: 4px 0;">
-      <img hidden="{{noPhoto}}" 
-        style="object-fit: contain; height: 160px; width: 160px; vertical-align:middle; padding-right: 8px;" 
-        src="{{photo}}">
-      <span style="vertical-align:middle; white-space:nowrap;">{{name}}</span>
-    </div>
-  </template>
-</x-list>
-
-`.trim();
 
   return class extends DomParticle {
     get template() {
@@ -42,7 +35,11 @@ defineParticle(({ DomParticle, resolver}) => {
       }
     }
     _fetchPlaces() {
-      fetch(`${placesService}?location=55.6711876,12.4537421&radius=1000&keyword=restuarant`)
+      //let loc = `55.6711876,12.4537421`;
+      let loc = `55.6786282,12.3155385`;
+      let radius = `10000`;
+      let type = `restaurant`;
+      fetch(`${placesService}?location=${loc}&radius=${radius}&type=${type}`)
         .then(response => response.json())
         .then(json => this._receivePlaces(json))
         ;
@@ -52,27 +49,24 @@ defineParticle(({ DomParticle, resolver}) => {
       let list = this._views.get('list');
       let entity = list.entityClass;
       json.results.forEach((p, i) => {
+        let photo = p.photos && p.photos.length 
+          ? `${photoService}?maxwidth=400&photoreference=${p.photos[0].photo_reference}` 
+          : p.icon;
         let e = new entity({
+          id: p.id,
+          reference: p.reference,
           name: p.name,
           icon: p.icon,
-          photos: p.photos
+          photos: p.photos,
+          photo
         });
         list.store(e);
       });
-      let places = json.results.map(p => {
-        let {name, icon, photos} = p;
-        let photo = photos && photos.length ? `${photoService}?maxwidth=400&photoreference=${photos[0].photo_reference}` : icon;
-        return {name, photo};
-      });
-      this._setState({places});
-    }
-    _shouldRender(props, state) {
-      return state.places && state.places.length;
+      this._setState({count: json.results.length});
     }
     _render(props, state) {
-      console.log('state.places === ', state.places);
       return {
-        places: state.places
+        complete: state.count > 0
       };
     }
   };

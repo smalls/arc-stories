@@ -6,18 +6,20 @@
 # http://polymer.github.io/PATENTS.txt
 
 import 'FindRestaurants.manifest'
+import 'RestaurantMasterDetail.manifest'
+import 'RestaurantList.manifest'
+import 'RestaurantDetail.manifest'
 
 recipe
-  FindRestaurants
+  FindRestaurants.list        -> RestaurantMasterDetail.list
+  RestaurantMasterDetail.list -> RestaurantList.list
+  RestaurantList.selected     -> RestaurantMasterDetail.selected
+  RestaurantDetail.selected   -> RestaurantList.selected
 
-import 'MasterDetail.manifest'
-import 'Master.manifest'
-import 'Detail.manifest'
+import 'ReservationForm.manifest'
 
-recipe
-  MasterDetail.list -> Master.list
-  Master.selected -> MasterDetail.selected
-  Detail.selected -> Master.selected
+recipe  
+  ReservationForm
 
 import 'Restaurant.manifest'
-view Restaurants of [Restaurant] in 'restaurants.json'
+view RestaurantSelections of [Restaurant] in '../Things/empty.json'

@@ -10,17 +10,21 @@
 
 defineParticle(({DomParticle}) => {
 
+  let item = `
+<img src="{{icon}}" style="width:32px;vertical-align:middle;padding-right:8px;"><span>{{name}}</span>
+  `.trim();
+
+  let selectable = `
+<div on-click="_onSelect" key="{{index}}" style="padding: 6px; border-bottom: 1px dotted silver; cursor: pointer;">
+  ${item}
+</div>
+  `.trim();
+
   let template = `
 <div master>
-  <div style="padding: 6px;">Found <span>{{count}}</span> account(s).</div>
+  <div style="padding: 6px;">Found <span>{{count}}</span> item(s).</div>
   <hr>
-  <x-list items="{{items}}">
-    <template>
-      <div on-click="_onSelect" key="{{index}}" style="padding: 6px; border-bottom: 1px dotted silver; cursor: pointer;">
-        <span>{{name}}</span>: $<span>{{balance}}</span>
-      </div>
-    </template>
-  </x-list>
+  <x-list items="{{items}}"><template>${selectable}</template></x-list>
 </div>
     `.trim();
 

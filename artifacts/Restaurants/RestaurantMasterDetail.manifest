@@ -8,7 +8,12 @@
 
 import 'Restaurant.manifest'
 
-particle Detail in 'Detail.js'
-  Detail(in [Restaurant] selected)
-  consume detail
-  description `Restaurant details`
+particle RestaurantMasterDetail in '../Things/MasterDetail.js'
+  RestaurantMasterDetail(in [Restaurant] list, in [Restaurant] selected)
+  consume masterdetail
+    provide master
+      view list
+    provide detail
+      view selected
+
+  #description ``

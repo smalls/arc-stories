@@ -12,9 +12,8 @@ defineParticle(({DomParticle}) => {
 
   let template = `
 <div master-detail>
-<div style%="{{tab0}}" style="padding: 6px">
-  <button on-click="_onBack">Back</button>
-  <hr>
+<div style%="{{tab0}}">
+  <div style="padding: 6px"><button on-click="_onBack">Back</button></div>
   <div slotid="detail"></div>
 </div>
 <div style%="{{tab1}}">

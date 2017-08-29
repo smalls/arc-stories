@@ -6,9 +6,9 @@
 # subject to an additional IP rights grant found at
 # http://polymer.github.io/PATENTS.txt
 
-import 'Account.manifest'
+import 'Restaurant.manifest'
 
-particle Master in 'Master.js'
-  Master(in [Account] list, in [Account] selected)
+particle RestaurantList in 'RestaurantList.js'
+  RestaurantList(in [Restaurant] list, in [Restaurant] selected)
   consume master
   description `Show ${list}`

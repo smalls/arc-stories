@@ -8,7 +8,7 @@
 
 import 'Account.manifest'
 
-particle Detail in 'Detail.js'
-  Detail(in [Account] selected)
+particle AccountsDetail in 'AccountsDetail.js'
+  AccountsDetail(in [Account] selected)
   consume detail
   description `Account details`
