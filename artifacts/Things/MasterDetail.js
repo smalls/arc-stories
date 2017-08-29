@@ -27,13 +27,10 @@ defineParticle(({DomParticle}) => {
       return template;
     }
     _render(props, state) {
-      let list = props.list || 0;
       let selection = props.selected || 0;
       let selected = selection.length && selection[selection.length-1];
       let name = selected && selected.name;
       return {
-        selected: name || '(no selection)',
-        count: list.length,
         tab0: {display: name ? '' : 'none'},
         tab1: {display: !name ? '' : 'none'}
       };

@@ -6,13 +6,20 @@
 # http://polymer.github.io/PATENTS.txt
 
 import 'AccountsMasterDetail.manifest'
-import 'AccountsMaster.manifest'
+import 'AccountsList.manifest'
 import 'AccountsDetail.manifest'
-
-recipe
-  AccountsMasterDetail.list -> AccountsMaster.list
-  AccountsMaster.selected -> AccountsMasterDetail.selected
-  AccountsDetail.selected -> AccountsMaster.selected
 
 import 'Account.manifest'
 view Accounts of [Account] in 'accounts.json'
+
+recipe
+  copy Accounts as accounts
+  create as selected
+  AccountsMasterDetail
+    selected = selected
+  AccountsList
+    list <- accounts
+    selected = selected
+  AccountsDetail
+    selected <- selected
+

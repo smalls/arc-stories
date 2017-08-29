@@ -16,12 +16,17 @@ defineParticle(({DomParticle}) => {
 <style>
   [${host}] {
     padding: 6px 0;
+    text-align: center;
   }
   [${host}] > * {
     vertical-align: middle;
   }
   [${host}] select {
     padding: 6px;
+    font-size: 14px;
+  }
+  [${host}] input {
+    padding: 4px;
     font-size: 14px;
   }
 </style>
@@ -38,7 +43,7 @@ ${styles}
     <option>Larger party</option>
   </select>
 
-  <input type="date">
+  <input type="date" value="{{date}}">
 
   <select>
     ${[12,1,2,3,4,5,6,7,8,9,10,11]
@@ -52,6 +57,16 @@ ${styles}
   return class extends DomParticle {
     get template() {
       return template;
+    }
+    toDateInputValue(date) {
+      let local = new Date(date);
+      local.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+      return local.toJSON().slice(0,10);
+    }
+    _render(props, state) {
+      return {
+        date: this.toDateInputValue(new Date())
+      }
     }
   };
 

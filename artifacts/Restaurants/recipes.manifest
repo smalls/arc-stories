@@ -16,10 +16,10 @@ recipe
   RestaurantList.selected     -> RestaurantMasterDetail.selected
   RestaurantDetail.selected   -> RestaurantList.selected
 
-import 'ReservationForm.manifest'
-
-recipe  
-  ReservationForm
-
 import 'Restaurant.manifest'
 view RestaurantSelections of [Restaurant] in '../Things/empty.json'
+
+import 'ReservationForm.manifest'
+
+recipe
+  ReservationForm

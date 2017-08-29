@@ -8,8 +8,8 @@
 
 import 'Account.manifest'
 
-particle AccountsMaster in 'AccountsMaster.js'
-  AccountsMaster(in [Account] list, in [Account] selected)
+particle AccountsList in 'AccountsList.js'
+  AccountsList(in [Account] list, inout [Account] selected)
   affordance dom
   consume master
   description `Show ${list}`

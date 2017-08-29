@@ -15,11 +15,19 @@ import 'Greet.manifest'
 import 'PersonalGreet.manifest'
 
 recipe
+  copy as greeting
   Greet
-   
-recipe
-  PersonalGreet
+    greeting <- greeting
 
 recipe
-  Greet
+  copy as person
   PersonalGreet
+    person <- person
+
+recipe
+  copy as greeting
+  copy as person
+  Greet
+    greeting <- greeting
+  PersonalGreet
+    person <- person

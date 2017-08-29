@@ -27,22 +27,15 @@ defineParticle(({DomParticle}) => {
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAaCAQAAAAOXfQCAAAA/0lEQVR4AZ3SW0sCQRjG8Skzkw5EGAWCCApJeBFFQSEtSGEURGoElnaw3fn+3+AfDDE7G3No9n2u3neen96scA+H7IkywwUn5eAzj2XYFpKUWjw8RiLpxsM7BYexrMJSwXdW4mAL+ZuDODjQ8DwOvmo4dZc6jJkUMkUamfzJE63845oh/5kX9s1/rZIQRhlXVDTSuM3Cy95oCvuwwcjJhqwL39CzoJSOCA0NpCU7YXhmhf0wHFvhfYjVyazwmzU/PDLKM+bG1vbDW11MqFLjRu/XPrbKpyot8t+ny4e6zX2wqSoj6oXrJg/q3nDDS77oWV/6LDl1w4Rt59suA3P/AYHdZDfGturmAAAAAElFTkSuQmCC);
   }
   [${host}] [content] {
-    background-color: #8e24aa; 
-    color: white; 
-    padding: 24px; 
+    background-color: #8e24aa;
+    color: white;
+    padding: 24px;
     line-height: 1.7em;
   }
   [${host}] [banner] {
     height: 160px;
     background-size: cover;
     background-position: center bottom;
-  }
-  select {
-    cursor: pointer;
-    color: #333;
-    background-color: #fff;
-    border-radius: 16px;
-    padding: 8px;
   }
 </style>
   `;
@@ -54,20 +47,22 @@ ${styles}
   <div content>
     <div style="font-size: 1.2em;">{{name}}</div>
     <div>
-      <span>{{rating}}</span> 
+      <span>{{rating}}</span>
       &nbsp;<star></star><star></star><star></star><star></star><star hollow></star>
       · <span>{{reviews}}</span> reviews
     </div>
     <div style="font-size: 0.8em;">{{kind}}</div>
     <div style="font-size: 0.9em;">{{addr}}</div>
   </div>
-  <div slotid="action"></div>
+  <div slotid="action">
+    <!--<div style="padding: 4px; cursor: pointer;"><i style="color: blue;">make reservation?</i></div>-->
+  </div>
 </div>
     `.trim();
 
   let services = `https://xenonjs.com/services/http/php`;
   let detailsService =`${services}/place-details.php`;
-  
+
   return class extends DomParticle {
     get template() {
       return template;

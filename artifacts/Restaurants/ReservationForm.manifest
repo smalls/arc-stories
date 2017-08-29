@@ -12,4 +12,4 @@ particle ReservationForm in 'ReservationForm.js'
   ReservationForm(in [Restaurant] selected)
   affordance dom
   consume action
-  description `Reservation details`
+  description `Reservation Details`

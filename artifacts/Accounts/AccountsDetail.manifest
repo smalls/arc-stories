@@ -12,4 +12,4 @@ particle AccountsDetail in 'AccountsDetail.js'
   AccountsDetail(in [Account] selected)
   affordance dom
   consume detail
-  description `Account details`
+  #description `Show Account Details`
