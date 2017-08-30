@@ -33,7 +33,9 @@ defineParticle(({DomParticle}) => {
       return Boolean(state.item);
     }
     _render(props, state) {
-      return state.item;
+      let {name, balance} = state.item;
+      // must be POJO for port communication (state.item is a Proxy)
+      return {name, balance};
     }
   };
 

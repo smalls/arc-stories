@@ -20,8 +20,15 @@ defineParticle(({DomParticle}) => {
 </div>
   `.trim();
 
+  let host = `master`;
+
   let template = `
-<div master>
+<style>
+  [${host}] {
+    overflow: auto;
+  }
+</style>
+<div ${host}>
   <div style="padding: 6px;">Found <span>{{count}}</span> item(s).</div>
   <hr>
   <x-list items="{{items}}"><template>${selectable}</template></x-list>
@@ -40,13 +47,10 @@ defineParticle(({DomParticle}) => {
       });
       this._setState({items});
     }
-    _shouldRender(props, state) {
-      return Boolean(state.items);
-    }
     _render(props, state) {
       return {
         items: state.items,
-        count: state.items.length
+        count: state.items ? state.items.length : 0
       };
     }
     _onBack(e, state) {

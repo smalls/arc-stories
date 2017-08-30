@@ -6,13 +6,6 @@
 # subject to an additional IP rights grant found at
 # http://polymer.github.io/PATENTS.txt
 
-import 'https://$cdn/entities/Thing.manifest'
-
-schema Restaurant extends Thing
- normative
-    Text id
-    Text reference
-    Text icon
-    Text photos
-    Text photo
-
+schema Message
+  normative
+    Text text

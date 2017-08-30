@@ -8,3 +8,5 @@
 import 'artifacts/HelloWorld/recipes.manifest'
 import 'artifacts/Restaurants/recipes.manifest'
 import 'artifacts/Accounts/recipes.manifest'
+import 'artifacts/Chat/recipes.manifest'
+import 'artifacts/Products/recipes.manifest'

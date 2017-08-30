@@ -6,13 +6,11 @@
 # subject to an additional IP rights grant found at
 # http://polymer.github.io/PATENTS.txt
 
-import 'https://$cdn/entities/Thing.manifest'
+import 'Message.manifest'
 
-schema Restaurant extends Thing
- normative
-    Text id
-    Text reference
-    Text icon
-    Text photos
-    Text photo
-
+particle Chat in 'Chat.js'
+  Chat(in [Message] messages)
+  affordance dom
+  consume root
+    provide customgreeting
+  description `Chat`

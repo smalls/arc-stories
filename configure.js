@@ -9,4 +9,5 @@
  */
 
 window.urls = {
+  "../assets/products/": "https://$cdn/assets/products/"
 };
