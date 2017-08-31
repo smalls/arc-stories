@@ -51,7 +51,7 @@ defineParticle(({DomParticle}) => {
     padding-bottom: 4px;
   }
   [${host}] [name] {
-    padding-left: 16px;
+    padding: 0 16px;
     font-size: 0.75em;
     text-align: right;
   }
@@ -82,6 +82,10 @@ defineParticle(({DomParticle}) => {
   <div user>
     <label>My name is <input on-change="onNameChange" value="{{name}}"></label>
   </div>
+  <br>
+  <div>
+    <button on-click="onClearChat">Clear Chat</button>
+  </div>
   <div><hr></div>
 
   <template chat-message>
@@ -101,18 +105,15 @@ defineParticle(({DomParticle}) => {
 </div>
   `.trim();
 
-  // Defines the Greet particle as a sub-class of DomParticle.
-  // Greet may be speculatively instantiated by Arcs and will
-  // (definitely) be instantiated when the user picks the greeting
-  // suggestion.
   return class extends DomParticle {
     constructor() {
       super();
       this.initDb();
     }
     _getInitialState() {
+      let name = 'Smitty';
       return {
-        name: 'Smitty',
+        name,
         messages: []
       };
     }
@@ -141,15 +142,15 @@ defineParticle(({DomParticle}) => {
                 text: m.text,
                 name: m.name === state.name ? 'Me' : m.name,
                 isme: m.name === state.name
-              }
+              };
             })
           }
       	};
       }
     }
     onNameChange(e, state) {
-      console.log(e);
-      this._setState({name: e.data.value});
+      let name = e.data.value;
+      this._setState({name});
     }
     onMessageChange(e, state) {
       if (e.data.value) {
@@ -160,6 +161,10 @@ defineParticle(({DomParticle}) => {
           name: state.name
         });
       }
+    }
+    onClearChat(e, state) {
+      this.db.ref('messages').set({});
+      this._setState({messages: []});
     }
   };
 });
