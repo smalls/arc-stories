@@ -14,26 +14,45 @@ view PageProducts of [Product] in 'products.json'
 view Wishlist of [Product] in 'wishlist.json'
 view Somebody of Person in 'people.json'
 
-recipe
-  copy PageProducts as products
-  ShowProducts
-    list <- products
+#recipe
+#  copy PageProducts as products
+#  ShowProducts
+#    list <- products
 
-recipe
-  map Wishlist as wishlist
-  ShowProducts
-    list <- wishlist
+#recipe
+#  map Wishlist as wishlist
+#  ShowProducts
+#    list <- wishlist
 
 import 'https://$cdn/particles/Chooser/Chooser.manifest'
 import 'https://$cdn/particles/Recommend/Recommend.manifest'
+import 'https://$cdn/particles/AlsoOn/AlsoOn.manifest'
 
 recipe
-  Chooser.choices -> Recommend.recommendations
-  Chooser.resultList -> ShowProducts.list
-  Chooser.resultList -> Recommend.known
   map Wishlist as wishlist
-  copy as shortlist
+  copy PageProducts as shortlist
   Recommend
+    known <- shortlist
     population <- wishlist
+  Chooser
+    resultList = shortlist
+    choices <- Recommend.recommendations
   ShowProducts
-    list <- shortlist
+    list <- Chooser.resultList
+  AlsoOn
+    list <- Chooser.resultList
+    choices <- Recommend.recommendations
+
+import 'https://$cdn/particles/GiftList/GiftList.manifest'
+import 'https://$cdn/particles/Arrivinator/Arrivinator.manifest'
+
+recipe
+  map as person
+  GiftList
+    person <- person
+  Arrivinator
+
+import 'https://$cdn/particles/ManufacturerInfo/ManufacturerInfo.manifest'
+
+recipe
+  ManufacturerInfo
