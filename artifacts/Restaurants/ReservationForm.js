@@ -43,14 +43,7 @@ ${styles}
     <option>Larger party</option>
   </select>
 
-  <input type="date" value="{{date}}">
-
-  <select>
-    ${[12,1,2,3,4,5,6,7,8,9,10,11]
-      .map(i => `<option>${i}:00 AM</option><option>${i}:30 AM</option>`).join('')}
-    ${[12,1,2,3,4,5,6,7,8,9,10,11]
-      .map(i => `<option ${i==8?'selected':''}>${i}:00 PM</option><option>${i}:30 PM</option>`).join('')}
-  </select>
+  <input type="datetime-local" value="{{date}}" on-change="_onDateChanged">
 </div>
     `.trim();
 
@@ -58,15 +51,31 @@ ${styles}
     get template() {
       return template;
     }
+    _willReceiveProps(props, state) {
+      if (!props.event.length) {
+        this._storeNewEvent(this.toDateInputValue(new Date()));
+      }
+    }
     toDateInputValue(date) {
       let local = new Date(date);
       local.setMinutes(date.getMinutes() - date.getTimezoneOffset());
-      return local.toJSON().slice(0,10);
+      return local.toJSON().slice(0,16);
     }
     _render(props, state) {
+      const event = props.event;
       return {
-        date: this.toDateInputValue(new Date())
+        date: event && event.length && event[event.length-1].rawData.startDate || ''
       }
+    }
+    _onDateChanged(e, state) {
+      this._storeNewEvent(e.data.value);
+    }
+    _storeNewEvent(startDate) {
+      const event = this._views.get('event');
+      event.store(new event.entityClass({
+        startDate: startDate,
+        endDate: startDate
+      }));
     }
   };
 

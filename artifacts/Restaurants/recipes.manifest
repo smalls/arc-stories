@@ -20,6 +20,12 @@ import 'Restaurant.manifest'
 view RestaurantSelections of [Restaurant] in '../Things/empty.json'
 
 import 'ReservationForm.manifest'
+import 'Calendar.manifest'
 
 recipe
+  create as event
   ReservationForm
+    event = event
+
+recipe
+  Calendar
