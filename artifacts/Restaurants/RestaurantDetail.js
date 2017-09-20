@@ -29,13 +29,13 @@ defineParticle(({DomParticle}) => {
   [${host}] [content] {
     background-color: #8e24aa;
     color: white;
-    padding: 24px;
+    padding: 16px;
     line-height: 1.7em;
   }
   [${host}] [banner] {
-    height: 160px;
+    height: 300px;
     background-size: cover;
-    background-position: center bottom;
+    background-position: center center;
   }
 </style>
   `;
