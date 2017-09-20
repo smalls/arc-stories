@@ -15,4 +15,5 @@ schema Restaurant extends Thing
     Text icon
     Text photos
     Text photo
-
+    Text rating
+    Text address
