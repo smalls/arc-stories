@@ -14,7 +14,7 @@ defineParticle(({ DomParticle, resolver}) => {
 
   let template = `
 <div ${host}>
-  <div hidden="{{complete}}" style="padding: 4px;">finding restaurants...</div>
+  <div hidden="{{complete}}" style="padding: 10px 6px">Finding restaurants...</div>
   <div slotid="masterdetail"></div>
 </div>
 
@@ -49,8 +49,8 @@ defineParticle(({ DomParticle, resolver}) => {
       let list = this._views.get('list');
       let entity = list.entityClass;
       json.results.forEach((p, i) => {
-        let photo = p.photos && p.photos.length 
-          ? `${photoService}?maxwidth=400&photoreference=${p.photos[0].photo_reference}` 
+        let photo = p.photos && p.photos.length
+          ? `${photoService}?maxwidth=400&photoreference=${p.photos[0].photo_reference}`
           : p.icon;
         let e = new entity({
           id: p.id,
@@ -58,6 +58,8 @@ defineParticle(({ DomParticle, resolver}) => {
           name: p.name,
           icon: p.icon,
           photos: p.photos,
+          address: p.vicinity,
+          rating: p.rating,
           photo
         });
         list.store(e);
