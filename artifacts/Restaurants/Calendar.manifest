@@ -6,11 +6,10 @@
 # subject to an additional IP rights grant found at
 # http://polymer.github.io/PATENTS.txt
 
-import 'Restaurant.manifest'
 import 'Event.manifest'
 
-particle ReservationForm in 'ReservationForm.js'
-  ReservationForm(in [Restaurant] selected, inout [Event] event)
+particle Calendar in 'Calendar.js'
+  Calendar(inout [Event] event)
   affordance dom
   consume action
-  description `Reservation Details`
+  description `Calendar`
