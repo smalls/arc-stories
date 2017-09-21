@@ -38,9 +38,9 @@ recipe
     resultList = shortlist
     choices <- Recommend.recommendations
   ShowProducts
-    list <- Chooser.resultList
+    list <- shortlist
   AlsoOn
-    list <- Chooser.resultList
+    list <- shortlist
     choices <- Recommend.recommendations
 
 import 'https://$cdn/particles/GiftList/GiftList.manifest'
