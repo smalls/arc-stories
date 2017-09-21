@@ -26,8 +26,10 @@ defineParticle(({DomParticle}) => {
   }
   [${host}] .scroll-container {
     position: relative;
+    /*
     height: 280px;
     overflow-y: auto;
+    */
   }
   [${host}] .hour-row {
     display: flex;
