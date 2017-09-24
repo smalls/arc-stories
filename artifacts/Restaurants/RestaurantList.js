@@ -21,6 +21,7 @@ defineParticle(({DomParticle}) => {
   </div>
   <div class="cover"><img class="photo" src="{{photo}}"></div>
 </div>
+<div slotid="annotation" subid$="{{id}}">
   `.trim();
 
   let selectable = `
