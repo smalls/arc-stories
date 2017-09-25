@@ -13,4 +13,5 @@ particle RestaurantDetail in 'RestaurantDetail.js'
   affordance dom
   consume detail
     provide action
+      view selected
   description `Show Restaurant Details`
