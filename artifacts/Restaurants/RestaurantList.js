@@ -21,6 +21,7 @@ defineParticle(({DomParticle}) => {
   </div>
   <div class="cover"><img class="photo" src="{{photo}}"></div>
 </div>
+<div slotid="annotation" subid$="{{id}}">
   `.trim();
 
   let selectable = `
@@ -91,6 +92,7 @@ defineParticle(({DomParticle}) => {
   }
 </style>
 <div ${host}>
+  <div slotid="modifier"></div>
   <div class="header">Found <span>{{count}}</span> item(s).</div>
   <x-list items="{{items}}"><template>${selectable}</template></x-list>
 </div>

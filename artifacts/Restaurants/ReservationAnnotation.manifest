@@ -7,12 +7,10 @@
 # http://polymer.github.io/PATENTS.txt
 
 import 'Restaurant.manifest'
+import 'Event.manifest'
 
-particle RestaurantList in 'RestaurantList.js'
-  RestaurantList(in [Restaurant] list, inout [Restaurant] selected)
+particle ReservationAnnotation in 'ReservationForm.js'
+  ReservationAnnotation(in [Restaurant] list, inout [Event] event)
   affordance dom
-  consume master
-    provide modifier
-    provide set of annotation
-      view list
-  description `Show ${list}`
+  consume set of annotation
+  description `Reservation Details`

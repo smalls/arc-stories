@@ -29,12 +29,21 @@ defineParticle(({DomParticle}) => {
     padding: 4px;
     font-size: 14px;
   }
+  [${host}] [times] {
+    display: flex;
+    justify-content: space-around
+  }
 </style>
   `;
 
   let template = `
 ${styles}
-<div ${host}>
+<div ${host} id={{subId}}>
+  <div>{{timePicker}}</div>
+  <div times>{{availableTimes}}</div>
+</div>
+
+<template time-picker>
   <select>
     <option>1 person</option>
     <option selected>2 people</option>
@@ -44,7 +53,11 @@ ${styles}
   </select>
 
   <input type="datetime-local" value="{{date}}" on-change="_onDateChanged">
-</div>
+</template>
+
+<template available-times>
+  <button disabled$={{notAvailable}}>{{time}}</button>
+</template>
     `.trim();
 
   return class extends DomParticle {
@@ -61,10 +74,70 @@ ${styles}
       local.setMinutes(date.getMinutes() - date.getTimezoneOffset());
       return local.toJSON().slice(0,16);
     }
+    makeUpReservationTimes(id, partySize, date, n) {
+      // Start at (n-1)/2 before the desired reservation time
+      let t = new Date((date ? new Date(date) : new Date()).getTime() - (n-1)/2*3600*1000);
+      let hour = (t.getHours()) % 24;
+      let minute = t.getMinutes() > 30 ? "30" : "00";
+
+      // Seed per restaurant and day
+      let seed = parseInt(id.substr(0, 8), 16);
+      let ts = t.getTime();
+      ts = ts - (ts % 86400000); // Round to closest day
+
+      let result = [];
+
+      while (n--) {
+        // This seems somewhat balanced
+        let notAvailable = (seed*(hour*2+minute/30)*(ts/86400000))%10 <= partySize;
+
+        result.push({
+          time: `${hour}:${minute}`,
+          notAvailable
+        });
+
+        // Increment time slot
+        if (minute == "30") {
+          hour = (hour + 1) % 24;
+          minute = "00";
+        } else {
+          minute = "30";
+        }
+      }
+
+      return result;
+    }
     _render(props, state) {
+      console.log("rendering", props, state);
       const event = props.event;
+      const selected = props.selected;
+      const selectedRestaurant = selected && selected.length && selected[selected.length-1];
+      let date = event && event.length && event[event.length-1].rawData.startDate || ''
+      if (selectedRestaurant) {
+        return this._renderSingle(selectedRestaurant, date, 2, true);
+      } else {
+        return this._renderList(props.list || [], date, 2);
+      }
+    }
+    _renderSingle(restaurant, date, partySize, showTimePicker) {
+      let restaurantId = restaurant.rawData.id || "";
+      let times = this.makeUpReservationTimes(restaurantId, partySize, date, 5);
+      console.log("times", restaurantId, times);
       return {
-        date: event && event.length && event[event.length-1].rawData.startDate || ''
+        subId: restaurantId,
+        timePicker: {
+          $template: 'time-picker',
+          models: showTimePicker ? [{ date }] : []
+        },
+        availableTimes: {
+          $template: 'available-times',
+          models: times
+        }
+      }
+    }
+    _renderList(list, date, partySize) {
+      return {
+        items: list.map(restaurant => this._renderSingle(restaurant, date, partySize, false))
       }
     }
     _onDateChanged(e, state) {

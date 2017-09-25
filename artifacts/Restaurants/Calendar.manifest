@@ -12,4 +12,5 @@ particle Calendar in 'Calendar.js'
   Calendar(inout [Event] event)
   affordance dom
   consume action
+  consume modifier
   description `Calendar`
