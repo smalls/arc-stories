@@ -92,6 +92,7 @@ defineParticle(({DomParticle}) => {
   }
 </style>
 <div ${host}>
+  <div slotid="modifier"></div>
   <div class="header">Found <span>{{count}}</span> item(s).</div>
   <x-list items="{{items}}"><template>${selectable}</template></x-list>
 </div>

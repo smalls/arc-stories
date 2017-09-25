@@ -12,6 +12,7 @@ particle RestaurantList in 'RestaurantList.js'
   RestaurantList(in [Restaurant] list, inout [Restaurant] selected)
   affordance dom
   consume master
+    provide modifier
     provide set of annotation
       view list
   description `Show ${list}`
