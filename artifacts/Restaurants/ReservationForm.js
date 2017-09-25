@@ -116,7 +116,7 @@ ${styles}
       if (selectedRestaurant) {
         return this._renderSingle(selectedRestaurant, date, 2, true);
       } else {
-        return this._renderList(props.list, date, 2);
+        return this._renderList(props.list || [], date, 2);
       }
     }
     _renderSingle(restaurant, date, partySize, showTimePicker) {
