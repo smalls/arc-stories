@@ -119,11 +119,10 @@ ${styles}
       const event = props.event;
       const selected = props.selected;
       const selectedRestaurant = selected && selected.length && selected[selected.length-1];
-      let date = event && event.length && event[event.length-1].rawData.startDate || ''
       if (selectedRestaurant) {
-        return this._renderSingle(selectedRestaurant, date, 2, true);
+        return this._renderSingle(selectedRestaurant, state.currentEvent.startDate, state.currentEvent.participants || 2, true);
       } else {
-        return this._renderList(props.list || [], date, 2);
+        return this._renderList(props.list || [], state.currentEvent.startDate, state.currentEvent.participants || 2);
       }
     }
     _renderSingle(restaurant, date, partySize, showTimePicker) {
