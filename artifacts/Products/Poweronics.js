@@ -16,12 +16,13 @@ defineParticle(({DomParticle}) => {
     <style>
       [pics-brand] {
         background-color: #ffeb3b;
-        border-radius: 52px 91px 0px 0px;
+        /*border-radius: 52px 91px 0px 0px;*/
+        border-radius: 0 52px;
       }
       [pics-brand] > div {
         display: flex;
         align-items: center;
-        padding: 8px 24px;
+        padding: 4px 24px;
         font-size: 0.9em;
       }
       [pics-brand] > div > [poweronics] {
