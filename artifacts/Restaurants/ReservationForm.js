@@ -65,7 +65,6 @@ ${styles}
       return template;
     }
     _willReceiveProps(props, state) {
-      console.log("willReceiveProps", props, state);
       if (!props.event.length) {
         const now = this.toDateInputValue(new Date());
         const event = { startDate: now, endDate: now, participants: 2 };
@@ -115,8 +114,6 @@ ${styles}
       return result;
     }
     _render(props, state) {
-      console.log("rendering", props, state);
-      const event = props.event;
       const selected = props.selected;
       const selectedRestaurant = selected && selected.length && selected[selected.length-1];
       if (selectedRestaurant) {
@@ -128,7 +125,6 @@ ${styles}
     _renderSingle(restaurant, date, partySize, showTimePicker) {
       let restaurantId = restaurant.rawData.id || "";
       let times = this.makeUpReservationTimes(restaurantId, partySize, date, 5);
-      console.log("times", restaurantId, times);
       return {
         subId: restaurantId,
         timePicker: {
@@ -152,13 +148,11 @@ ${styles}
       this._storeNewEvent(newEvent);
     }
     _onPartySizeChanged(e, state) {
-      console.log("new party size", e.data.value, state);
       let newEvent = Object.assign({}, state.currentEvent || {});
       newEvent.participants = e.data.value;
       this._storeNewEvent(newEvent);
     }
     _storeNewEvent(newEvent) {
-      console.log("new event", newEvent);
       const event = this._views.get('event');
       event.store(new event.entityClass(newEvent));
     }

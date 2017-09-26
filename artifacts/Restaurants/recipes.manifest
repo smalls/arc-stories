@@ -21,6 +21,7 @@ view RestaurantSelections of [Restaurant] in '../Things/empty.json'
 
 import 'ReservationForm.manifest'
 import 'ReservationAnnotation.manifest'
+import 'PartySize.manifest'
 import 'Calendar.manifest'
 
 recipe
@@ -28,6 +29,8 @@ recipe
   ReservationForm
     event = event
   ReservationAnnotation
+    event = event
+  PartySize
     event = event
 
 recipe
