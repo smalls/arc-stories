@@ -5,14 +5,10 @@
 # subject to an additional IP rights grant found at
 # http://polymer.github.io/PATENTS.txt
 
-#import 'https://$cdn/entities/Product.manifest'
-import 'https://$cdn/entities/Person.manifest'
-
 import 'https://$cdn/particles/ShowProducts/ShowProducts.manifest'
 
 view PageProducts of [Product] in 'products.json'
 view Wishlist of [Product] in 'wishlist.json'
-view Somebody of Person in 'people.json'
 
 #recipe
 #  copy PageProducts as products
@@ -27,6 +23,7 @@ view Somebody of Person in 'people.json'
 import 'https://$cdn/particles/Chooser/Chooser.manifest'
 import 'https://$cdn/particles/Recommend/Recommend.manifest'
 import 'https://$cdn/particles/AlsoOn/AlsoOn.manifest'
+import 'Poweronics.manifest'
 
 recipe
   map Wishlist as wishlist
@@ -39,12 +36,16 @@ recipe
     choices <- Recommend.recommendations
   ShowProducts
     list <- shortlist
+  Poweronics
+    list <- shortlist
   AlsoOn
     list <- shortlist
     choices <- Recommend.recommendations
 
 import 'https://$cdn/particles/GiftList/GiftList.manifest'
 import 'https://$cdn/particles/Arrivinator/Arrivinator.manifest'
+
+view Somebody of Person in 'people.json'
 
 recipe
   map as person
