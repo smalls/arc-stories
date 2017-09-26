@@ -44,12 +44,12 @@ ${styles}
 </div>
 
 <template time-picker>
-  <select>
-    <option>1 person</option>
-    <option selected>2 people</option>
+  <select on-change="_onPartySizeChanged">
+    <option value="1" selected$={{selected1}}>1 person</option>
+    <option value="2" selected$={{selected2}}>2 people</option>
     ${[3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
-      .map(i => `<option>${i} people</option>`).join('')}
-    <option>Larger party</option>
+      .map(i => `<option value="${i}" selected$={{selected${i}}}>${i} people</option>`).join('')}
+    <option value="21" selected$={{selected21}}>Larger party</option>
   </select>
 
   <input type="datetime-local" value="{{date}}" on-change="_onDateChanged">
@@ -65,8 +65,15 @@ ${styles}
       return template;
     }
     _willReceiveProps(props, state) {
+      console.log("willReceiveProps", props, state);
       if (!props.event.length) {
-        this._storeNewEvent(this.toDateInputValue(new Date()));
+        const now = this.toDateInputValue(new Date());
+        const event = { startDate: now, endDate: now, participants: 2 };
+        this._storeNewEvent(event);
+        this._setState({ currentEvent: event });
+      } else {
+        const event = props.event[props.event.length - 1].rawData;
+        this._setState({ currentEvent: event });
       }
     }
     toDateInputValue(date) {
@@ -112,11 +119,10 @@ ${styles}
       const event = props.event;
       const selected = props.selected;
       const selectedRestaurant = selected && selected.length && selected[selected.length-1];
-      let date = event && event.length && event[event.length-1].rawData.startDate || ''
       if (selectedRestaurant) {
-        return this._renderSingle(selectedRestaurant, date, 2, true);
+        return this._renderSingle(selectedRestaurant, state.currentEvent.startDate, state.currentEvent.participants || 2, true);
       } else {
-        return this._renderList(props.list || [], date, 2);
+        return this._renderList(props.list || [], state.currentEvent.startDate, state.currentEvent.participants || 2);
       }
     }
     _renderSingle(restaurant, date, partySize, showTimePicker) {
@@ -127,7 +133,7 @@ ${styles}
         subId: restaurantId,
         timePicker: {
           $template: 'time-picker',
-          models: showTimePicker ? [{ date }] : []
+          models: showTimePicker ? [{ [`selected${partySize}`]: true, date }] : []
         },
         availableTimes: {
           $template: 'available-times',
@@ -141,14 +147,20 @@ ${styles}
       }
     }
     _onDateChanged(e, state) {
-      this._storeNewEvent(e.data.value);
+      let newEvent = Object.assign({}, state.currentEvent || { participants: 2 });
+      newEvent.startDate = newEvent.endDate = e.data.value;
+      this._storeNewEvent(newEvent);
     }
-    _storeNewEvent(startDate) {
+    _onPartySizeChanged(e, state) {
+      console.log("new party size", e.data.value, state);
+      let newEvent = Object.assign({}, state.currentEvent || {});
+      newEvent.participants = e.data.value;
+      this._storeNewEvent(newEvent);
+    }
+    _storeNewEvent(newEvent) {
+      console.log("new event", newEvent);
       const event = this._views.get('event');
-      event.store(new event.entityClass({
-        startDate: startDate,
-        endDate: startDate
-      }));
+      event.store(new event.entityClass(newEvent));
     }
   };
 

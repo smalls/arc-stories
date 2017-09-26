@@ -54,9 +54,7 @@ ${styles}
     <div style="font-size: 0.8em;">{{kind}}</div>
     <div style="font-size: 0.9em;" unsafe-html="{{addr}}"></div>
   </div>
-  <div slotid="action">
-    <!--<div style="padding: 4px; cursor: pointer;"><i style="color: blue;">make reservation?</i></div>-->
-  </div>
+  <div slotid="action"></div>
 </div>
     `.trim();
 

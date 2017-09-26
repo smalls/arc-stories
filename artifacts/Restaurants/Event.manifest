@@ -10,3 +10,4 @@ schema Event
   normative
     Text endDate
     Text startDate
+    Text participants
