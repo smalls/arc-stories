@@ -15,14 +15,28 @@ defineParticle(({DomParticle}) => {
   let styles = `
 <style>
   [${host}] {
-    padding: 6px 0;
+    padding: 6px;
   }
   [${host}] .date-picker {
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 6px 0 12px;
+  }
+  [${host}] .schedule-icon {
+    position: absolute;
+    top: 12px;
+    left: 28px;
   }
   [${host}] input {
-    padding: 4px;
+    padding: 5px;
+    margin: 2px 6px 0;
     font-size: 14px;
+    border: 0;
+  }
+  [${host}] input::-webkit-clear-button {
+    display: none;
   }
   [${host}] .scroll-container {
     position: relative;
@@ -31,6 +45,12 @@ defineParticle(({DomParticle}) => {
   }
   [${host}][expanded] .scroll-container {
     height: auto;
+  }
+  [${host}] .expand-button,
+  [${host}] .collapse-button {
+    margin: 4px auto 0;
+    background-color: transparent;
+    border: 0;
   }
   [${host}] .expand-button {
     display: block;
@@ -49,7 +69,10 @@ defineParticle(({DomParticle}) => {
   }
   [${host}] .hour-row .label {
     width: 50px;
+    padding-right: 10px;
     text-align: right;
+    font-size: 12px;
+    color: #555;
   }
   [${host}] .hour-row .block {
     flex: 1;
@@ -61,12 +84,17 @@ defineParticle(({DomParticle}) => {
     height: 50%;
     background: #FFF;
     border: 1px solid #CCC;
+    border-top: 0;
+    border-radius: 0;
     outline: none;
+  }
+  [${host}] .scroll-container div:first-child > .block {
+    border-top: 1px solid #CCC;
   }
   [${host}] .events-container {
     position: absolute;
     top: 0;
-    left: 50px;
+    left: 60px;
     right: 10px;
   }
   [${host}] .events-container .event {
@@ -76,10 +104,14 @@ defineParticle(({DomParticle}) => {
     border-radius: 2px;
     padding: 4px;
     box-sizing: border-box;
-    background: #039be5;
+    background: #4285f4;
     color: #fff;
+    font-size: 14px;
+    pointer-events: none;
   }
   [${host}] .events-container .selected-event {
+    display: flex;
+    align-items: center;
     position: absolute;
     left: 0;
     right: 10px;
@@ -87,8 +119,38 @@ defineParticle(({DomParticle}) => {
     padding: 4px;
     box-sizing: border-box;
     background: #fff;
-    color: #039be5;
-    border: 2px solid #039be5;
+    color: #4285f4;
+    border: 2px solid #4285f4;
+    font-size: 14px;
+    pointer-events: none;
+  }
+  [${host}] .events-container .selected-event .date-icon {
+    padding-left: 4px;
+  }
+  [${host}] .x-button {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    padding: 4px;
+    border-radius: 50%;
+    -webkit-appearance: none;
+    background-color: #4285f4;
+    color: #fff;
+    border: 0;
+    outline: none;
+    overflow: hidden;
+  }
+  [${host}] .x-button:disabled {
+    opacity: 0.3;
+  }
+  [${host}] .x-button.raised {
+    transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: 0.2s;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  }
+  [${host}] .x-button.raised:active:not(:disabled) {
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2);
+    transition-delay: 0s;
   }
 </style>
   `;
@@ -97,9 +159,10 @@ defineParticle(({DomParticle}) => {
 ${styles}
 <div ${host} expanded$="{{expanded}}">
   <div class="date-picker">
-    <button on-click="_onPreviousDayClick">&lt;</button>
+    <i class="material-icons schedule-icon">schedule</i>
+    <button class="x-button raised" on-click="_onPreviousDayClick"><i class="material-icons">keyboard_arrow_left</i></button>
     <input type="date" value="{{date}}" on-change="_onDateChanged">
-    <button on-click="_onNextDayClick">&gt;</button>
+    <button class="x-button raised" on-click="_onNextDayClick"><i class="material-icons">keyboard_arrow_right</i></button>
   </div>
 
   <div class="scroll-container">
@@ -120,13 +183,13 @@ ${styles}
         <div class="event" style="{{eventOneStyle}}">{{eventOneName}}</div>
         <div class="event" style="{{eventTwoStyle}}">{{eventTwoName}}</div>
         <div class="event" style="{{eventThreeStyle}}">{{eventThreeName}}</div>
-        <div class="selected-event" style="{{selectedEventStyle}}">Selected Time</div>
+        <div class="selected-event" style="{{selectedEventStyle}}">Selected Time <i class="date-icon material-icons">date_range</i></div>
       </div>
     </div>
   </div>
 
-  <button class="expand-button" on-click="_expandCalendar">Expand</button>
-  <button class="collapse-button" on-click="_collapseCalendar">Collapse</button>
+  <button class="expand-button" on-click="_expandCalendar"><i class="material-icons">expand_more</i></button>
+  <button class="collapse-button" on-click="_collapseCalendar"><i class="material-icons">expand_less</i></button>
 </div>
     `.trim();
 

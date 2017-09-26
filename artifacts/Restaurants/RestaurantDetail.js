@@ -27,7 +27,7 @@ defineParticle(({DomParticle}) => {
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAaCAQAAAAOXfQCAAAA/0lEQVR4AZ3SW0sCQRjG8Skzkw5EGAWCCApJeBFFQSEtSGEURGoElnaw3fn+3+AfDDE7G3No9n2u3neen96scA+H7IkywwUn5eAzj2XYFpKUWjw8RiLpxsM7BYexrMJSwXdW4mAL+ZuDODjQ8DwOvmo4dZc6jJkUMkUamfzJE63845oh/5kX9s1/rZIQRhlXVDTSuM3Cy95oCvuwwcjJhqwL39CzoJSOCA0NpCU7YXhmhf0wHFvhfYjVyazwmzU/PDLKM+bG1vbDW11MqFLjRu/XPrbKpyot8t+ny4e6zX2wqSoj6oXrJg/q3nDDS77oWV/6LDl1w4Rt59suA3P/AYHdZDfGturmAAAAAElFTkSuQmCC);
   }
   [${host}] [content] {
-    background-color: #8e24aa;
+    background-color: #4285F4;
     color: white;
     padding: 16px;
     line-height: 1.7em;

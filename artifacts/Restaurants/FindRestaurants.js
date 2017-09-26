@@ -36,7 +36,8 @@ defineParticle(({ DomParticle, resolver}) => {
     }
     _fetchPlaces() {
       //let loc = `55.6711876,12.4537421`;
-      let loc = `55.6786282,12.3155385`;
+      //let loc = `55.6786282,12.3155385`;
+      let loc = `37.7896927,-122.3890096`;
       let radius = `10000`;
       let type = `restaurant`;
       fetch(`${placesService}?location=${loc}&radius=${radius}&type=${type}`)
