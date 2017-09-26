@@ -11,9 +11,9 @@ import 'RestaurantList.manifest'
 import 'RestaurantDetail.manifest'
 
 recipe
-  FindRestaurants.list        -> RestaurantMasterDetail.list
+  FindRestaurants.list        -> RestaurantMasterDetail.list #restaurantlist
   RestaurantMasterDetail.list -> RestaurantList.list
-  RestaurantList.selected     -> RestaurantMasterDetail.selected
+  RestaurantList.selected     -> RestaurantMasterDetail.selected #selected
   RestaurantDetail.selected   -> RestaurantList.selected
 
 import 'Restaurant.manifest'
