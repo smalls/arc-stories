@@ -37,7 +37,7 @@ import 'https://$cdn/particles/AlsoOn/AlsoOn.manifest'
 import 'Poweronics.manifest'
 
 recipe
-  map #wishlist as wishlist
+  map Wishlist as wishlist
   copy PageProducts as shortlist
   Recommend
     known <- shortlist
@@ -46,8 +46,6 @@ recipe
     resultList = shortlist
     choices <- Recommend.recommendations
   ShowProducts
-    list <- shortlist
-  Poweronics
     list <- shortlist
   AlsoOn
     list <- shortlist
