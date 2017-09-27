@@ -12,4 +12,4 @@ particle AccountsList in 'AccountsList.js'
   AccountsList(in [Account] list, inout [Account] selected)
   affordance dom
   consume master
-  description `Show ${list}`
+  description `show ${list}`

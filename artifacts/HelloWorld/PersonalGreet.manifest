@@ -12,4 +12,4 @@ particle PersonalGreet in 'PersonalGreet.js'
   PersonalGreet(in Person person)
   affordance dom
   consume customgreeting
-  description `Greetings to you`
+  description `greetings to you`

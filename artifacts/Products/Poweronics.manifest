@@ -11,4 +11,4 @@ import 'https://$cdn/entities/Product.manifest'
 particle Poweronics in 'Poweronics.js'
   Poweronics(in [Product] list)
   consume set of prenotation
-  description `Poweronics manufacturer information ${list}`
+  description `Poweronics manufacturer information`
