@@ -9,6 +9,7 @@ import 'https://$cdn/particles/ShowProducts/ShowProducts.manifest'
 
 view PageProducts of [Product] in 'products.json'
 view Wishlist of [Product] in 'wishlist.json'
+view WishlistCandidates of [Product] in 'wishlist_candidates.json'
 
 #recipe
 #  copy PageProducts as products
@@ -19,6 +20,16 @@ view Wishlist of [Product] in 'wishlist.json'
 #  map Wishlist as wishlist
 #  ShowProducts
 #    list <- wishlist
+
+# Make a wish
+recipe
+  map WishlistCandidates as candidates
+  create #wishlist as wishlist
+  Chooser
+    resultList = wishlist
+    choices <- candidates
+  ShowProducts
+    list <- wishlist
 
 import 'https://$cdn/particles/Chooser/Chooser.manifest'
 import 'https://$cdn/particles/Recommend/Recommend.manifest'
@@ -35,8 +46,6 @@ recipe
     resultList = shortlist
     choices <- Recommend.recommendations
   ShowProducts
-    list <- shortlist
-  Poweronics
     list <- shortlist
   AlsoOn
     list <- shortlist
@@ -86,8 +95,8 @@ recipe
 
 import 'https://$cdn/particles/ManufacturerInfo/ManufacturerInfo.manifest'
 
-recipe
-  ManufacturerInfo
+# recipe
+#   ManufacturerInfo
 
 recipe
   use as shortlist
