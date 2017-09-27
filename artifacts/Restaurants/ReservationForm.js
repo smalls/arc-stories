@@ -20,18 +20,73 @@ defineParticle(({DomParticle}) => {
   }
   [${host}] > * {
     vertical-align: middle;
+    padding: 6px 0;
   }
-  [${host}] select {
-    padding: 6px;
+  [${host}] .x-select {
+    display: inline-block;
+    position: relative;
+  }
+  [${host}] .x-select::after {
+    content: '▼';
+    display: block;
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    transform: scaleY(0.6);
+    pointer-events: none;
+  }
+  [${host}] .x-select > select {
+    position: relative;
+    margin: 0;
+    padding: 8px 24px 10px 6px;
+    border: 0;
+    border-bottom: 1px solid #ddd;
+    background-color: transparent;
+    border-radius: 0;
     font-size: 14px;
+    font-weight: 300;
+    overflow: hidden;
+    outline: none;
+    -webkit-appearance: none;
+    vertical-align: top;
   }
   [${host}] input {
-    padding: 4px;
+    padding: 6px;
     font-size: 14px;
+    vertical-align: top;
+    border: 0;
+    background: transparent;
+  }
+  [${host}] input::-webkit-clear-button {
+    display: none;
   }
   [${host}] [times] {
     display: flex;
     justify-content: space-around
+  }
+  [${host}] .x-button {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    padding: 10px 16px;
+    border-radius: 3px;
+    -webkit-appearance: none;
+    background-color: #4285f4;
+    color: #fff;
+    border: 0;
+    outline: none;
+  }
+  [${host}] .x-button:disabled {
+    opacity: 0.3;
+  }
+  [${host}] .x-button.raised {
+    transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: 0.2s;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  }
+  [${host}] .x-button.raised:active:not(:disabled) {
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2);
+    transition-delay: 0s;
   }
 </style>
   `;
@@ -44,19 +99,21 @@ ${styles}
 </div>
 
 <template time-picker>
-  <select on-change="_onPartySizeChanged">
-    <option value="1" selected$={{selected1}}>1 person</option>
-    <option value="2" selected$={{selected2}}>2 people</option>
-    ${[3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
-      .map(i => `<option value="${i}" selected$={{selected${i}}}>${i} people</option>`).join('')}
-    <option value="21" selected$={{selected21}}>Larger party</option>
-  </select>
+  <div class="x-select">
+    <select on-change="_onPartySizeChanged">
+      <option value="1" selected$={{selected1}}>1 person</option>
+      <option value="2" selected$={{selected2}}>2 people</option>
+      ${[3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+        .map(i => `<option value="${i}" selected$={{selected${i}}}>${i} people</option>`).join('')}
+      <option value="21" selected$={{selected21}}>Larger party</option>
+    </select>
+  </div>
 
   <input type="datetime-local" value="{{date}}" on-change="_onDateChanged">
 </template>
 
 <template available-times>
-  <button disabled$={{notAvailable}}>{{time}}</button>
+  <button class="x-button raised" disabled$={{notAvailable}}>{{time}}</button>
 </template>
     `.trim();
 

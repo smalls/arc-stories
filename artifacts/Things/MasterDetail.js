@@ -10,10 +10,38 @@
 
 defineParticle(({DomParticle}) => {
 
+  let host = `master-detail`;
+
   let template = `
-<div master-detail style="border: 1px solid silver;">
+<style>
+  [${host}] .x-button {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    padding: 10px 16px;
+    border-radius: 3px;
+    -webkit-appearance: none;
+    background-color: #4285f4;
+    color: #fff;
+    border: 0;
+    outline: none;
+  }
+  [${host}] .x-button:disabled {
+    opacity: 0.3;
+  }
+  [${host}] .x-button.raised {
+    transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: 0.2s;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  }
+  [${host}] .x-button.raised:active:not(:disabled) {
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2);
+    transition-delay: 0s;
+  }
+</style>
+<div ${host} style="border: 1px solid silver;">
   <div style%="{{tab0}}">
-    <div style="padding: 6px"><button on-click="_onBack">Back</button></div>
+    <div style="padding: 6px"><button class="x-button raised" on-click="_onBack">BACK</button></div>
     <div slotid="detail"></div>
   </div>
   <div style%="{{tab1}}">
