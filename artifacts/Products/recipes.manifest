@@ -80,6 +80,16 @@ recipe
     list <- shortlist
 
 recipe
+  copy #shortlist as shortlist
+  map as person
+  ShowProducts
+    list <- shortlist
+  GiftList
+    person <- person
+  Arrivinator
+    list <- shortlist
+
+recipe
   map #wishlist as wishlist
   use as shortlist
   Recommend
