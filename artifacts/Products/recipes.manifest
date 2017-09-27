@@ -7,9 +7,10 @@
 
 import 'https://$cdn/particles/ShowProducts/ShowProducts.manifest'
 
-view PageProducts of [Product] in 'products.json'
-view Wishlist of [Product] in 'wishlist.json'
-view WishlistCandidates of [Product] in 'wishlist_candidates.json'
+view DefaultProducts of [Product] #shortlist in 'empty.json'
+
+# view PageProducts of [Product] in 'products.json'
+# view Wishlist of [Product] in 'wishlist.json'
 
 #recipe
 #  copy PageProducts as products
@@ -21,35 +22,25 @@ view WishlistCandidates of [Product] in 'wishlist_candidates.json'
 #  ShowProducts
 #    list <- wishlist
 
-# Make a wish
-recipe
-  map WishlistCandidates as candidates
-  create #wishlist as wishlist
-  Chooser
-    resultList = wishlist
-    choices <- candidates
-  ShowProducts
-    list <- wishlist
-
 import 'https://$cdn/particles/Chooser/Chooser.manifest'
 import 'https://$cdn/particles/Recommend/Recommend.manifest'
 import 'https://$cdn/particles/AlsoOn/AlsoOn.manifest'
 import 'Poweronics.manifest'
 
-recipe
-  map Wishlist as wishlist
-  copy PageProducts as shortlist
-  Recommend
-    known <- shortlist
-    population <- wishlist
-  Chooser
-    resultList = shortlist
-    choices <- Recommend.recommendations
-  ShowProducts
-    list <- shortlist
-  AlsoOn
-    list <- shortlist
-    choices <- Recommend.recommendations
+# recipe
+#   map Wishlist as wishlist
+#   copy PageProducts as shortlist
+#   Recommend
+#     known <- shortlist
+#     population <- wishlist
+#   Chooser
+#     resultList = shortlist
+#     choices <- Recommend.recommendations
+#   ShowProducts
+#     list <- shortlist
+#   AlsoOn
+#     list <- shortlist
+#     choices <- Recommend.recommendations
 
 import 'https://$cdn/particles/GiftList/GiftList.manifest'
 import 'https://$cdn/particles/Arrivinator/Arrivinator.manifest'
@@ -69,8 +60,18 @@ recipe
 #  Poweronics
 #    list <- shortlist
 
+# recipe
+#   copy PageProducts as shortlist
+#   map as person
+#   ShowProducts
+#      list <- shortlist
+#   GiftList
+#      person <- person
+#   Arrivinator
+#     list <- shortlist
+
 recipe
-  copy PageProducts as shortlist
+  copy #shortlist as shortlist
   map as person
   ShowProducts
     list <- shortlist
