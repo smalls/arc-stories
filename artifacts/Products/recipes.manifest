@@ -82,7 +82,7 @@ recipe
     list <- shortlist
 
 recipe
-  use #wishlist as wishlist
+  map #wishlist as wishlist
   use as shortlist
   Recommend
     known <- shortlist
@@ -97,8 +97,8 @@ recipe
 
 import 'https://$cdn/particles/ManufacturerInfo/ManufacturerInfo.manifest'
 
-recipe
-  ManufacturerInfo
+# recipe
+#   ManufacturerInfo
 
 recipe
   use as shortlist
