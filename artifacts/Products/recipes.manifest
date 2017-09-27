@@ -7,6 +7,8 @@
 
 import 'https://$cdn/particles/ShowProducts/ShowProducts.manifest'
 
+view #shortlist of [Product] in 'empty.json'
+
 # view PageProducts of [Product] in 'products.json'
 # view Wishlist of [Product] in 'wishlist.json'
 
