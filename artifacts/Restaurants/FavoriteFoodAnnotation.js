@@ -43,7 +43,7 @@ ${styles}
       const food = props.food && props.food.length && props.food[props.food.length - 1].rawData.food || '';
       return {
         items: list.map(restaurant => this._renderHaveFood(restaurant, food))
-      }
+      };
     }
     _renderHaveFood(restaurant, food) {
       const restaurantId = restaurant.rawData.id;
