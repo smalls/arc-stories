@@ -53,7 +53,45 @@ recipe
     person <- person
   Arrivinator
 
+#recipe
+#  copy PageProducts as shortlist
+#  ShowProducts
+#    list <- shortlist
+#  Poweronics
+#    list <- shortlist
+
+recipe
+  copy PageProducts as shortlist
+  map as person
+  ShowProducts
+    list <- shortlist
+  GiftList
+    person <- person
+  Arrivinator
+    list <- shortlist
+
+recipe
+  map Wishlist as wishlist
+  use as shortlist
+  Recommend
+    known <- shortlist
+    population <- wishlist
+  Chooser
+    resultList = shortlist
+    choices <- Recommend.recommendations
+  AlsoOn
+    list <- shortlist
+    choices <- Recommend.recommendations
+
+
 import 'https://$cdn/particles/ManufacturerInfo/ManufacturerInfo.manifest'
 
 recipe
   ManufacturerInfo
+
+recipe
+  use as shortlist
+  ManufacturerInfo
+    list <- shortlist
+  Poweronics
+    list <- shortlist
