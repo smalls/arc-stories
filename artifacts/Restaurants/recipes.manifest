@@ -35,3 +35,18 @@ recipe
 
 recipe
   Calendar
+
+import 'FavoriteFoodPicker.manifest'
+import 'FavoriteFoodAnnotation.manifest'
+
+recipe
+  create #favoritefood as food
+  FavoriteFoodPicker
+    food = food
+
+recipe
+  map #favoritefood as food
+  use as list
+  FavoriteFoodAnnotation
+    list <- list
+    food <- food
