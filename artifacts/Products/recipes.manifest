@@ -7,8 +7,8 @@
 
 import 'https://$cdn/particles/ShowProducts/ShowProducts.manifest'
 
-view PageProducts of [Product] in 'products.json'
-view Wishlist of [Product] in 'wishlist.json'
+# view PageProducts of [Product] in 'products.json'
+# view Wishlist of [Product] in 'wishlist.json'
 view WishlistCandidates of [Product] in 'wishlist_candidates.json'
 
 #recipe
@@ -36,20 +36,20 @@ import 'https://$cdn/particles/Recommend/Recommend.manifest'
 import 'https://$cdn/particles/AlsoOn/AlsoOn.manifest'
 import 'Poweronics.manifest'
 
-recipe
-  map Wishlist as wishlist
-  copy PageProducts as shortlist
-  Recommend
-    known <- shortlist
-    population <- wishlist
-  Chooser
-    resultList = shortlist
-    choices <- Recommend.recommendations
-  ShowProducts
-    list <- shortlist
-  AlsoOn
-    list <- shortlist
-    choices <- Recommend.recommendations
+# recipe
+#   map Wishlist as wishlist
+#   copy PageProducts as shortlist
+#   Recommend
+#     known <- shortlist
+#     population <- wishlist
+#   Chooser
+#     resultList = shortlist
+#     choices <- Recommend.recommendations
+#   ShowProducts
+#     list <- shortlist
+#   AlsoOn
+#     list <- shortlist
+#     choices <- Recommend.recommendations
 
 import 'https://$cdn/particles/GiftList/GiftList.manifest'
 import 'https://$cdn/particles/Arrivinator/Arrivinator.manifest'
@@ -69,15 +69,15 @@ recipe
 #  Poweronics
 #    list <- shortlist
 
-recipe
-  copy PageProducts as shortlist
-  map as person
-  ShowProducts
-    list <- shortlist
-  GiftList
-    person <- person
-  Arrivinator
-    list <- shortlist
+# recipe
+#   copy PageProducts as shortlist
+#   map as person
+#   ShowProducts
+#      list <- shortlist
+#   GiftList
+#      person <- person
+#   Arrivinator
+#     list <- shortlist
 
 recipe
   copy #shortlist as shortlist
