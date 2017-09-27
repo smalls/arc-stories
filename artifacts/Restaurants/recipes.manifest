@@ -13,7 +13,7 @@ import 'RestaurantDetail.manifest'
 recipe
   FindRestaurants.list        -> RestaurantMasterDetail.list
   RestaurantMasterDetail.list -> RestaurantList.list
-  RestaurantList.selected     -> RestaurantMasterDetail.selected #selected
+  RestaurantList.selected     -> RestaurantMasterDetail.selected
   RestaurantDetail.selected   -> RestaurantList.selected
 
 import 'Restaurant.manifest'
