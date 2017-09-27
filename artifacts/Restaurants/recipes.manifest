@@ -10,22 +10,14 @@ import 'RestaurantMasterDetail.manifest'
 import 'RestaurantList.manifest'
 import 'RestaurantDetail.manifest'
 
-import 'Restaurant.manifest'
-
-view RestaurantList of [Restaurant] #list in '../Things/empty.json'
-view RestaurantSelections of [Restaurant] #selected in '../Things/empty.json'
-
 recipe
-  copy #list as list
-  copy #selected as selected
-  FindRestaurants
-    list = list
-  RestaurantList
-    selected = selected
   FindRestaurants.list        -> RestaurantMasterDetail.list
   RestaurantMasterDetail.list -> RestaurantList.list
   RestaurantList.selected     -> RestaurantMasterDetail.selected
   RestaurantDetail.selected   -> RestaurantList.selected
+
+import 'Restaurant.manifest'
+view RestaurantSelections of [Restaurant] in '../Things/empty.json'
 
 import 'ReservationForm.manifest'
 import 'ReservationAnnotation.manifest'
@@ -33,14 +25,10 @@ import 'PartySize.manifest'
 import 'Calendar.manifest'
 
 recipe
-  use #list as list
-  use #selected as selected
   create as event
   ReservationForm
-    selected <- selected
     event = event
   ReservationAnnotation
-    list <- list
     event = event
   PartySize
     event = event
