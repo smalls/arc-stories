@@ -34,6 +34,7 @@ defineParticle(({DomParticle}) => {
     margin: 2px 6px 0;
     font-size: 14px;
     border: 0;
+    background: transparent;
   }
   [${host}] input::-webkit-clear-button {
     display: none;
