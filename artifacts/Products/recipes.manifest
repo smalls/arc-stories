@@ -80,7 +80,7 @@ recipe
     list <- shortlist
 
 recipe
-  map Wishlist as wishlist
+  map #wishlist as wishlist
   use as shortlist
   Recommend
     known <- shortlist
