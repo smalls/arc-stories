@@ -15,4 +15,4 @@ particle RestaurantList in 'RestaurantList.js'
     provide modifier
     provide set of annotation
       view list
-  description `Show ${list}`
+  description `show ${list}`

@@ -8,7 +8,7 @@
 
 "use strict";
 
-defineParticle(({ DomParticle, resolver}) => {
+defineParticle(({DomParticle, resolver}) => {
 
   let host = `find-restaurants`;
 
