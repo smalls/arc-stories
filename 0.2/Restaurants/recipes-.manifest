@@ -1,0 +1,52 @@
+# Copyright (c) 2017 Google Inc. All rights reserved.
+# This code may only be used under the BSD style license found at
+# http://polymer.github.io/LICENSE.txt
+# Code distributed by Google as part of this project is also
+# subject to an additional IP rights grant found at
+# http://polymer.github.io/PATENTS.txt
+
+import 'FindRestaurants.manifest'
+import 'RestaurantMasterDetail.manifest'
+import 'RestaurantList.manifest'
+import 'RestaurantDetail.manifest'
+
+recipe
+  FindRestaurants.list        -> RestaurantMasterDetail.list
+  RestaurantMasterDetail.list -> RestaurantList.list
+  RestaurantList.selected     -> RestaurantMasterDetail.selected
+  RestaurantDetail.selected   -> RestaurantList.selected
+
+import 'Restaurant.manifest'
+view RestaurantSelections of [Restaurant] in '../Things/empty.json'
+
+import 'ReservationForm.manifest'
+import 'ReservationAnnotation.manifest'
+import 'PartySize.manifest'
+import 'Calendar.manifest'
+
+recipe
+  create as event
+  ReservationForm
+    event = event
+  ReservationAnnotation
+    event = event
+  PartySize
+    event = event
+
+recipe
+  Calendar
+
+import 'FavoriteFoodPicker.manifest'
+import 'FavoriteFoodAnnotation.manifest'
+
+recipe
+  create #favoritefood as food
+  FavoriteFoodPicker
+    food = food
+
+recipe
+  map #favoritefood as food
+  use as list
+  FavoriteFoodAnnotation
+    list <- list
+    food <- food
