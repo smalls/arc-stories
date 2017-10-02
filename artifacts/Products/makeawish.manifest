@@ -9,6 +9,7 @@ import 'https://$cdn/particles/ShowProducts/ShowProducts.manifest'
 import 'https://$cdn/particles/Chooser/Chooser.manifest'
 
 view WishlistCandidates of [Product] in 'wishlist_candidates.json'
+  description `wishlist candidates`
 
 # Make a wish
 recipe

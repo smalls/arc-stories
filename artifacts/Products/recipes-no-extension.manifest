@@ -7,10 +7,10 @@
 
 import 'https://$cdn/particles/ShowProducts/ShowProducts.manifest'
 
-view DefaultProducts of [Product] #shortlist in 'empty.json'
-
 view PageProducts of [Product] in 'products.json'
+  description `Products from your browsing context`
 view Wishlist of [Product] in 'wishlist.json'
+  description `Claire's wishlist`
 
 #recipe
 #  copy PageProducts as products
