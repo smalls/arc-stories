@@ -62,7 +62,7 @@ ${styles}
           $template: 'have-favorite-food',
           models: haveFood ? [{ food }] : []
         }
-      }
+      };
     }
     _storeNewEvent(newEvent) {
       const event = this._views.get('event');
