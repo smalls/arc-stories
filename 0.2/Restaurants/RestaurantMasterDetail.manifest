@@ -6,7 +6,7 @@
 # subject to an additional IP rights grant found at
 # http://polymer.github.io/PATENTS.txt
 
-import 'Restaurant.manifest'
+import 'Restaurant.schema'
 
 particle RestaurantMasterDetail in '../Things/source/MasterDetail.js'
   RestaurantMasterDetail(in [Restaurant] list, inout [Restaurant] selected)

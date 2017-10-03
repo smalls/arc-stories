@@ -6,8 +6,8 @@
 # subject to an additional IP rights grant found at
 # http://polymer.github.io/PATENTS.txt
 
-import 'FavoriteFood.manifest'
-import 'https://$cdn/entities/Person.manifest'
+import 'FavoriteFood.schema'
+import 'https://$cdn/artifacts/People/Person.schema'
 
 particle FavoriteFoodPicker in 'source/FavoriteFoodPicker.js'
   FavoriteFoodPicker(in Person person, inout [FavoriteFood] food)

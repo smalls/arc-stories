@@ -6,8 +6,8 @@
 # subject to an additional IP rights grant found at
 # http://polymer.github.io/PATENTS.txt
 
-import 'Restaurant.manifest'
-import '../Identity/FavoriteFood.manifest'
+import 'Restaurant.schema'
+import '../Identity/FavoriteFood.schema'
 
 particle FavoriteFoodAnnotation in 'source/FavoriteFoodAnnotation.js'
   FavoriteFoodAnnotation(in [Restaurant] restaurants, in [FavoriteFood] food)
