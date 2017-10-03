@@ -6,7 +6,7 @@
 # subject to an additional IP rights grant found at
 # http://polymer.github.io/PATENTS.txt
 
-import 'Account.manifest'
+import 'Account.schema'
 
 particle AccountsMasterDetail in '../Things/source/MasterDetail.js'
   AccountsMasterDetail(inout [Account] selected)

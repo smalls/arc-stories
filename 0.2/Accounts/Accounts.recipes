@@ -5,12 +5,12 @@
 # subject to an additional IP rights grant found at
 # http://polymer.github.io/PATENTS.txt
 
+import 'Account.schema'
+view Accounts of [Account] in 'accounts.json'
+
 import 'AccountsMasterDetail.manifest'
 import 'AccountsList.manifest'
 import 'AccountsDetail.manifest'
-
-import 'Account.manifest'
-view Accounts of [Account] in 'accounts.json'
 
 recipe
   copy Accounts as accounts

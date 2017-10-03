@@ -11,10 +11,10 @@ import 'ShowChatMessages.manifest'
 import 'ComposeMessage.manifest'
 
 # bootstrap chat view
-view Messages of [Message] #chat in 'chat.json'
+#view Messages of [Message] #chat in 'chat.json'
 
 recipe
-  copy #chat as messages
+  create #chat as messages
   map #identity as user
   map #identities as people
   ChatWrapper

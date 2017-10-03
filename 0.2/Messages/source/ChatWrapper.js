@@ -75,8 +75,7 @@ defineParticle(({DomParticle, resolver}) => {
 
   `.trim();
 
-  const chatLog = `background: #524c00; color: white; padding: 1px 6px 2px 8px; border-radius: 6px;`;
-  const chatPre = "%cChatWrapper";
+  const chatPre = [`%cChatWrapper`, `background: #524c00; color: white; padding: 1px 6px 2px 8px; border-radius: 6px;`];
 
   return class extends DomParticle {
     get template() {
@@ -106,14 +105,14 @@ defineParticle(({DomParticle, resolver}) => {
           state.count = count;
           // we need to animate this message
           state.animations.push(last);
-          console.log(`${chatPre}: count changed`, chatLog);
+          console.log(...chatPre, `count changed`);
         }
         // if we aren't showing something now
         if (!state.showing) {
           // get the next pending thing to show
           state.showing = state.animations.shift();
           if (state.showing) {
-            console.log(`${chatPre}: show new message, dismiss in a few seconds`, chatLog);
+            console.log(...chatPre, `show new message, dismiss in a few seconds`);
             // make it go away in a bit
             clearTimeout(state.timeout);
             state.timeout = setTimeout(() => this._invalidate(), 4000);
@@ -122,11 +121,11 @@ defineParticle(({DomParticle, resolver}) => {
         // else, if we have old message showing
         else {
           // make it go away now
-          console.log(`${chatPre}: dismissing old message`, chatLog);
+          console.log(...chatPre, `dismissing old message`);
           state.showing = null;
           clearTimeout(state.timeout);
           if (state.animations.length) {
-            console.log(`${chatPre}: show next message in 0.8s`, chatLog);
+            console.log(...chatPre, `show next message in 0.8s`);
             // go again after the dismiss animation is complete
             state.timeout = setTimeout(() => this._invalidate(), 800);
           }

@@ -63,16 +63,10 @@ defineParticle(({DomParticle, resolver}) => {
 </style>
 
 <div ${host}>
-<!--
-  <div>
-    <button on-click="onClearChat">Clear Chat</button>
-  </div>
-  <div><hr></div>
--->
 
   <template chat-message>
     <div message isme$="{{isme}}">
-      <div name><span avatar><img src="{{src}}" title="{{name}}" alt="{{name}}"></span><i>{{blurb}}</i></div>
+      <div name><span avatar><img src="{{src}}" title="{{name}}" alt="{{name}}"><b>{{name}}</b> - </span><i>{{blurb}}</i></div>
       <div content>{{content}}</div>
     </div>
   </template>
@@ -120,10 +114,6 @@ defineParticle(({DomParticle, resolver}) => {
     addMessage(msg) {
       const Message = this._views.get('messages').entityClass;
       this._views.get('messages').store(new Message(msg));
-    }
-    onNameChange(e) {
-    }
-    onClearChat(e) {
     }
   };
 });

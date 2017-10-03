@@ -6,7 +6,7 @@
 # subject to an additional IP rights grant found at
 # http://polymer.github.io/PATENTS.txt
 
-import 'Account.manifest'
+import 'Account.schema'
 
 particle AccountsList in 'source/AccountsList.js'
   AccountsList(in [Account] list, inout [Account] selected)
