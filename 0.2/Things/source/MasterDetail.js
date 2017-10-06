@@ -66,9 +66,11 @@ defineParticle(({DomParticle}) => {
     _onBack(e, state) {
       let {selected} = this._props;
       if (selected) {
-        let entity = selected[0];
+        let entity = selected[selected.length - 1];
+        console.assert(entity.name.length > 0, entity.name);
         entity.name = '';
         this._views.get('selected').store(entity);
+        this._setState({});
       }
     }
   };
