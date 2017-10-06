@@ -9,7 +9,6 @@
 import 'Account.schema'
 
 particle AccountsDetail in 'source/AccountsDetail.js'
-  AccountsDetail(in [Account] selected)
-  affordance dom
+  AccountsDetail(in Account selected)
   consume detail
   #description `Show Account Details`

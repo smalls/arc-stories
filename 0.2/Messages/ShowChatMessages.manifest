@@ -14,4 +14,4 @@ particle ShowChatMessages in 'source/ShowChatMessages.js'
   consume chatmessages
     provide preamble
     provide compose
-  description `see chat messages`
+  description `see messages`

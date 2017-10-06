@@ -55,20 +55,15 @@ defineParticle(({DomParticle}) => {
       return template;
     }
     _render(props, state) {
-      let selection = props.selected || 0;
-      let selected = selection.length && selection[selection.length-1];
-      let name = selected && selected.name;
+      let name = props.selected && props.selected.name;
       return {
         tab0: {display: name ? '' : 'none'},
         tab1: {display: !name ? '' : 'none'}
       };
     }
     _onBack(e, state) {
-      let {selected} = this._props;
-      if (selected) {
-        // Create an empty entity to indicate that none is selected.
-        let entity = new (this._views.get('selected').entityClass)({});
-        this._views.get('selected').store(entity);
+      if (this._props.selected) {
+        this._views.get('selected').clear();
       }
     }
   };
