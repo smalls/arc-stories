@@ -9,8 +9,7 @@
 import 'Restaurant.schema'
 
 particle RestaurantList in 'source/RestaurantList.js'
-  RestaurantList(in [Restaurant] list, inout [Restaurant] selected)
-  affordance dom
+  RestaurantList(in [Restaurant] list, inout Restaurant selected)
   consume master
     provide modifier
     provide set of annotation

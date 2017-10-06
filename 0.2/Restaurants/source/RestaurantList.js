@@ -120,16 +120,8 @@ defineParticle(({DomParticle}) => {
         count: state.items ? state.items.length : 0
       };
     }
-    _onBack(e, state) {
-      let {selected} = this._props;
-      if (selected) {
-        let entity = selected[0];
-        entity.name = '';
-        this._views.get('selected').store(entity);
-      }
-    }
     _onSelect(e, state) {
-      this._views.get('selected').store(this._props.list[e.data.key]);
+      this._views.get('selected').set(this._props.list[e.data.key]);
     }
   };
 

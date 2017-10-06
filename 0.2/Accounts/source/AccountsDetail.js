@@ -26,7 +26,7 @@ defineParticle(({DomParticle}) => {
     }
     _render(props) {
       let {name, balance} = props.selected;
-      // must be POJO for port communication (state.item is a Proxy)
+      // must be POJO for port communication (props.selected is a Proxy)
       return {name, balance};
     }
   };

@@ -67,10 +67,7 @@ ${styles}
     }
     _willReceiveProps(props) {
       let {selected} = props;
-      let item = null;
-      if (selected && selected.length) {
-        item = selected[selected.length-1].rawData;
-      }
+      let item = selected.rawData;
       if (item && item.id) {
         this._fetchDetail(item.reference);
       }
@@ -97,16 +94,17 @@ ${styles}
         name: state.item.name,
         rating: '',
         reviews: ''
-      }
+      };
+      let detail;
       if (state.detail) {
-        model = Object.assign(model, {
+        detail = {
           rating: state.detail.rating,
           reviews: state.detail.reviews.length,
           kind: state.detail.types.slice(0,3).join(' - ').replace(/_/g, ' '),
           addr: state.detail.adr_address
-        });
+        };
       }
-      return model;
+      return [model, detail];
     }
   };
 
