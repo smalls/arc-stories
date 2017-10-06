@@ -66,11 +66,9 @@ defineParticle(({DomParticle}) => {
     _onBack(e, state) {
       let {selected} = this._props;
       if (selected) {
-        let entity = selected[selected.length - 1];
-        console.assert(entity.name.length > 0, entity.name);
-        entity.name = '';
+        // Create an empty entity to indicate that none is selected.
+        let entity = new (this._views.get('selected').entityClass)({});
         this._views.get('selected').store(entity);
-        this._setState({});
       }
     }
   };
