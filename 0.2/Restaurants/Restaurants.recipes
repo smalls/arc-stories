@@ -12,7 +12,7 @@ import 'RestaurantDetail.manifest'
 
 recipe
   create as selected
-  create as restaurants
+  create #restaurants #nosync as restaurants
   FindRestaurants
     restaurants = restaurants
   RestaurantMasterDetail
