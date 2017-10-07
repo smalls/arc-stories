@@ -9,7 +9,6 @@
 import 'Account.schema'
 
 particle AccountsList in 'source/AccountsList.js'
-  AccountsList(in [Account] list, inout [Account] selected)
-  affordance dom
+  AccountsList(in [Account] list, inout Account selected)
   consume master
   description `show ${list}`

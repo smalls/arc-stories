@@ -34,6 +34,7 @@ defineParticle(({DomParticle, resolver}) => {
       }
     }
     _fetchPlaces() {
+      this._setState({count: -1});
       //let loc = `55.6711876,12.4537421`;
       //let loc = `55.6786282,12.3155385`;
       let loc = `37.7610927,-122.4208173`;
@@ -47,12 +48,12 @@ defineParticle(({DomParticle, resolver}) => {
     _receivePlaces(places) {
       //console.log("_receivePlaces = ", places.results);
       let restaurants = this._views.get('restaurants');
-      let entity = restaurants.entityClass;
+      let Restaurant = restaurants.entityClass;
       places.results.forEach(p => {
         let photo = p.photos && p.photos.length
           ? `${photoService}?maxwidth=400&photoreference=${p.photos[0].photo_reference}`
           : p.icon;
-        let e = new entity({
+        let e = new Restaurant({
           id: p.id,
           reference: p.reference,
           name: p.name,

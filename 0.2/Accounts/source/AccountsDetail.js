@@ -21,20 +21,12 @@ defineParticle(({DomParticle}) => {
     get template() {
       return template;
     }
-    _willReceiveProps(props) {
-      let {selected} = props;
-      let item = null;
-      if (selected && selected.length) {
-        item = selected[selected.length-1].rawData;
-      }
-      this._setState({item});
+    _shouldRender(props) {
+      return Boolean(props.selected);
     }
-    _shouldRender(props, state) {
-      return Boolean(state.item);
-    }
-    _render(props, state) {
-      let {name, balance} = state.item;
-      // must be POJO for port communication (state.item is a Proxy)
+    _render(props) {
+      let {name, balance} = props.selected;
+      // must be POJO for port communication (props.selected is a Proxy)
       return {name, balance};
     }
   };

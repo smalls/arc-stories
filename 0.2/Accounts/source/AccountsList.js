@@ -30,10 +30,6 @@ defineParticle(({DomParticle}) => {
 </style>
 
 <div ${host}>
-  <!--
-  <div section>Found <span>{{count}}</span> account(s).</div>
-  <hr>
-  -->
   <div>{{accounts}}</div>
   <template accounts>
     <div item section on-click="_onSelect" key="{{index}}">
@@ -72,16 +68,8 @@ defineParticle(({DomParticle}) => {
         }
       };
     }
-    _onBack(e, state) {
-      let {selected} = this._props;
-      if (selected) {
-        let entity = selected[0];
-        entity.name = '';
-        this._views.get('selected').store(entity);
-      }
-    }
     _onSelect(e, state) {
-      this._views.get('selected').store(this._props.list[e.data.key]);
+      this._views.get('selected').set(this._props.list[e.data.key]);
     }
   };
 
