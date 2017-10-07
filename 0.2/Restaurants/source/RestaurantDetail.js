@@ -67,11 +67,13 @@ ${styles}
     }
     _willReceiveProps(props) {
       let {selected} = props;
-      let item = selected.rawData;
-      if (item && item.id) {
-        this._fetchDetail(item.reference);
+      if (selected) {
+        let item = selected.rawData;
+        if (item && item.id) {
+          this._fetchDetail(item.reference);
+        }
+        this._setState({item});
       }
-      this._setState({item});
     }
     _fetchDetail(reference) {
       fetch(`${detailsService}?reference=${reference}`)
