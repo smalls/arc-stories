@@ -10,6 +10,5 @@ import 'https://$cdn/artifacts/People/Person.schema'
 
 particle PersonList in 'source/PersonList.js'
   PersonList(in [Person] people)
-  affordance dom
   consume root
   description `show ${people}`
