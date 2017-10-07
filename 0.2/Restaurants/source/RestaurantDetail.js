@@ -106,7 +106,7 @@ ${styles}
           addr: state.detail.adr_address
         };
       }
-      return [model, detail];
+      return Object.assign(model, detail);
     }
   };
 
