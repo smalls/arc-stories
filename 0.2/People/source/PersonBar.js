@@ -29,12 +29,12 @@ defineParticle(({DomParticle, resolver}) => {
     width: 24px;
     height: 24px;
     border-radius: 100%;
-    border: 1px solid silver;
+    /*border: 1px solid silver;*/
     box-sizing: border-box;
   }
   [${host}] img:not([active]) {
     opacity: 0.2;
-    border: 1px solid transparent;
+    /*border: 1px solid transparent;*/
   }
 </style>
 
@@ -57,7 +57,7 @@ defineParticle(({DomParticle, resolver}) => {
           index: i,
           name: person.name,
           avatar: resolver(`https://$cdn/assets/avatars/${person.avatar || 'user.jpg'}`),
-          active: Math.random()<0.3
+          active: Boolean(person.active) //Math.random()<0.3
         };
       });
       this._setState({people});
@@ -67,7 +67,7 @@ defineParticle(({DomParticle, resolver}) => {
       return {
         people: {
           $template: 'people',
-          models: state.people
+          models: state.people || []
         }
       };
     }
