@@ -11,4 +11,4 @@ import 'https://$cdn/artifacts/People/Person.schema'
 particle PersonBar in 'source/PersonBar.js'
   PersonBar(in [Person] people)
   consume toproot
-  description `show ${people}`
+  description `show arc sharing activity`
