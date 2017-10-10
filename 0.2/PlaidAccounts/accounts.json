@@ -1,0 +1,50 @@
+[
+  {
+    "id": "QPO8Jo8vdDHMepg41PBwckXm4KdK1yUdmXOwK",
+    "item": "KdDjmojBERUKx3JkDd9RuxA5EvejA4SENO4AA",
+    "user": "eJXpMzpR65FP4RYno6rzuA7OZjd9n3Hna0RYa",
+    "balanceAvailable": 1203.42,
+    "balanceCurrent": 1274.93,
+    "institution_type": "citi",
+    "metaName": "Plaid Savings",
+    "metaNumber": "9606",
+    "subtype": "savings",
+    "type": "depository"
+  },
+  {
+    "id": "nban4wnPKEtnmEpaKzbYFYQvA7D7pnCaeDBMy",
+    "item": "KdDjmojBERUKx3JkDd9RuxA5EvejA4SENO4AA",
+    "user": "eJXpMzpR65FP4RYno6rzuA7OZjd9n3Hna0RYa",
+    "balanceAvailable": 1081.78,
+    "balanceCurrent": 1253.32,
+    "institution_type": "citi",
+    "metaName": "Plaid Checking",
+    "metaNumber": "1702",
+    "subtype": "checking",
+    "type": "depository"
+  },
+  {
+    "id": "XARE85EJqKsjxLp6XR8ocg8VakrkXpTXmRdOo",
+    "item": "KdDjmojBERUKx3JkDd9RuxA5EvejA4SENO4AA",
+    "user": "eJXpMzpR65FP4RYno6rzuA7OZjd9n3Hna0RYa",
+    "balanceAvailable": 7205.23,
+    "balanceCurrent": 7255.23,
+    "institution_type": "citi",
+    "metaName": "Plaid Premier Checking",
+    "metaNumber": "5204",
+    "subtype": "checking",
+    "type": "depository"
+  },
+  {
+    "id": "pJPM4LMBNQFrOwp0jqEyTwyxJQrQbgU6kq37k",
+    "item": "KdDjmojBERUKx3JkDd9RuxA5EvejA4SENO4AA",
+    "user": "eJXpMzpR65FP4RYno6rzuA7OZjd9n3Hna0RYa",
+    "balanceAvailable": 9930,
+    "balanceCurrent": 2275.58,
+    "institution_type": "citi",
+    "metaLimit": 12500,
+    "metaName": "Plaid Credit Card",
+    "metaNumber": "3002",
+    "type": "credit"
+  }
+]
