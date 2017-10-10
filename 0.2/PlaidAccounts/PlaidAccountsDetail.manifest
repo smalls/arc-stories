@@ -6,11 +6,10 @@
 # subject to an additional IP rights grant found at
 # http://polymer.github.io/PATENTS.txt
 
-import 'Point.schema'
-view Points of [Point] #points in 'points.json'
+import 'PlaidAccount.schema'
+import 'PlaidTransaction.schema'
 
-import 'Chart2d.manifest'
-recipe
-  use Points as points
-  Chart2d
-    points <- points
+particle PlaidAccountsDetail in 'source/PlaidAccountsDetail.js'
+  PlaidAccountsDetail(in PlaidAccount selected, in [PlaidTransaction] transactions)
+  consume detail
+  #description `account details`

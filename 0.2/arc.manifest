@@ -5,9 +5,11 @@
 # subject to an additional IP rights grant found at
 # http://polymer.github.io/PATENTS.txt
 
-import 'Accounts/recipes.manifest'
-#import 'Restaurants/recipes.manifest'
-#import 'Products/recipes.manifest'
-
-#import 'HelloWorld/recipes.manifest'
-#import 'Chat/recipes.manifest'
+import 'People/People.recipes'
+import 'Messages/Messages.recipes'
+import 'Restaurants/Restaurants.recipes'
+import 'Identity/Identity.recipes'
+import 'Finance/Finance.recipes'
+import 'Points/Points.recipes'
+import 'Accounts/Accounts.recipes'
+import 'PlaidAccounts/PlaidAccounts.recipes'

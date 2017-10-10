@@ -6,11 +6,8 @@
 # subject to an additional IP rights grant found at
 # http://polymer.github.io/PATENTS.txt
 
-import 'Point.schema'
-view Points of [Point] #points in 'points.json'
+import 'https://schema.org/Thing'
+import 'https://schema.org/Event'
+import 'https://schema.org/Person'
+import 'https://schema.org/Place'
 
-import 'Chart2d.manifest'
-recipe
-  use Points as points
-  Chart2d
-    points <- points
