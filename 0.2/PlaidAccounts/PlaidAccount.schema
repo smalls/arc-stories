@@ -11,6 +11,7 @@ schema PlaidAccount
     Text id
     Text item
     Text user
+    Text name
   optional
     Text balanceAvailable
     Text balanceCurrent
