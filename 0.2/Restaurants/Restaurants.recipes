@@ -32,10 +32,15 @@ recipe
   create as event
   ReservationForm
     event = event
-  ReservationAnnotation
-    event = event
+#  ReservationAnnotation
+#    event = event
   PartySize
     event = event
+
+import '../Events/Calendar.manifest'
+
+recipe
+  Calendar
 
 import 'FavoriteFoodAnnotation.manifest'
 

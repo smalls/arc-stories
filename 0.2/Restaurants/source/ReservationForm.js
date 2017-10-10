@@ -122,13 +122,13 @@ ${styles}
       return template;
     }
     _willReceiveProps(props, state) {
-      if (!props.event.length) {
+      if (!props.event) {
         const now = this.toDateInputValue(new Date());
         const event = { startDate: now, endDate: now, participants: 2 };
         this._storeNewEvent(event);
         this._setState({ currentEvent: event });
       } else {
-        const event = props.event[props.event.length - 1].rawData;
+        const event = props.event.rawData;
         this._setState({ currentEvent: event });
       }
     }
@@ -171,8 +171,7 @@ ${styles}
       return result;
     }
     _render(props, state) {
-      const selected = props.selected;
-      const selectedRestaurant = selected && selected.length && selected[selected.length-1];
+      const selectedRestaurant = props.selected;
       if (selectedRestaurant) {
         return this._renderSingle(selectedRestaurant, state.currentEvent.startDate, state.currentEvent.participants || 2, true);
       } else {
@@ -211,7 +210,7 @@ ${styles}
     }
     _storeNewEvent(newEvent) {
       const event = this._views.get('event');
-      event.store(new event.entityClass(newEvent));
+      event.set(new event.entityClass(newEvent));
     }
   };
 

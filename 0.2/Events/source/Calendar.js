@@ -200,7 +200,7 @@ ${styles}
     }
     _willReceiveProps(props, state) {
       const event = props.event;
-      this._savedStartDate = event && event.length && event[event.length-1].rawData.startDate || '';
+      this._savedStartDate = event && event.rawData.startDate || '';
     }
     _render(props, state) {
       const events = this._getEventsForDate(this._savedStartDate);
@@ -307,7 +307,7 @@ ${styles}
     }
     _storeNewEvent(startDate) {
       const event = this._views.get('event');
-      event.store(new event.entityClass({
+      event.set(new event.entityClass({
         startDate: startDate,
         endDate: startDate
       }));

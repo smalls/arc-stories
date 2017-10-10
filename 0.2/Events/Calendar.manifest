@@ -9,6 +9,8 @@
 import 'Event.schema'
 
 particle Calendar in 'source/Calendar.js'
-  Calendar(inout [Event] event)
-  consume root
+  Calendar(inout Event event)
+  affordance dom
+  consume action
+  consume modifier
   description `Calendar`
