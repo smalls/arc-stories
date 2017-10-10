@@ -9,8 +9,8 @@
 import 'Restaurant.schema'
 import '../Events/Event.schema'
 
-particle ReservationAnnotation in 'source/ReservationForm.js'
-  ReservationAnnotation(in [Restaurant] list, inout [Event] event)
+particle ReservationAnnotation in 'source/ReservationAnnotation.js'
+  ReservationAnnotation(in [Restaurant] list, inout Event event)
   affordance dom
   consume set of annotation
   description `Reservation Details`

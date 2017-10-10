@@ -171,13 +171,8 @@ ${styles}
       return result;
     }
     _render(props, state) {
-      // TODO(noelutz): remove code that handles list rendering.
-      // It has moved to ReservationAnnotation.js.
-      const selectedRestaurant = props.selected;
-      if (selectedRestaurant) {
-        return this._renderSingle(selectedRestaurant, state.currentEvent.startDate, state.currentEvent.participants || 2, true);
-      } else {
-        return this._renderList(props.list || [], state.currentEvent.startDate, state.currentEvent.participants || 2);
+      if (props.list && props.list.length) {
+        return this._renderList(props.list, state.currentEvent.startDate, state.currentEvent.participants || 2);
       }
     }
     _renderSingle(restaurant, date, partySize, showTimePicker) {
