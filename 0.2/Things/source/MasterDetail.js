@@ -55,16 +55,15 @@ defineParticle(({DomParticle}) => {
       return template;
     }
     _render(props, state) {
-      let name = props.selected && props.selected.name;
+      let {selected} = props;
+      let hasSelection = selected && (selected.name || selected.id);
       return {
-        tab0: {display: name ? '' : 'none'},
-        tab1: {display: !name ? '' : 'none'}
+        tab0: {display: hasSelection ? '' : 'none'},
+        tab1: {display: !hasSelection ? '' : 'none'}
       };
     }
     _onBack(e, state) {
-      if (this._props.selected) {
-        this._views.get('selected').clear();
-      }
+      this._views.get('selected').clear();
     }
   };
 
