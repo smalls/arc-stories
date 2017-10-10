@@ -65,20 +65,6 @@ defineParticle(({DomParticle}) => {
         }
       };
     }
-    _onDateChanged(e, state) {
-      let newEvent = Object.assign({}, state.currentEvent || { participants: 2 });
-      newEvent.startDate = newEvent.endDate = e.data.value;
-      this._storeNewEvent(newEvent);
-    }
-    _onPartySizeChanged(e, state) {
-      let newEvent = Object.assign({}, state.currentEvent || {});
-      newEvent.participants = e.data.value;
-      this._storeNewEvent(newEvent);
-    }
-    _storeNewEvent(newEvent) {
-      const event = this._views.get('event');
-      event.store(new event.entityClass(newEvent));
-    }
   };
 
 });
