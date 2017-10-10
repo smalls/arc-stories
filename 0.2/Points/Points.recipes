@@ -6,9 +6,11 @@
 # subject to an additional IP rights grant found at
 # http://polymer.github.io/PATENTS.txt
 
-import 'Chart2d.manifest'
+import 'Point.schema'
+view Points of [Point] #points in 'points.json'
 
+import 'Chart2d.manifest'
 recipe
-  create #points as points
+  use Points as points
   Chart2d
     points <- points
