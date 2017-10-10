@@ -13,4 +13,4 @@ particle ReservationForm in 'source/ReservationForm.js'
   ReservationForm(in Restaurant selected, inout Event event)
   affordance dom
   consume action
-  description `Reservation Details`
+  description `reservation details`

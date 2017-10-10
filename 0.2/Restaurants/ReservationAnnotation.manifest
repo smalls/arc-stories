@@ -13,4 +13,4 @@ particle ReservationAnnotation in 'source/ReservationAnnotation.js'
   ReservationAnnotation(in [Restaurant] list, inout Event event)
   affordance dom
   consume set of annotation
-  description `Reservation Details`
+  description `reservation details`
