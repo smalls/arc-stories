@@ -17,7 +17,9 @@ recipe
 
 recipe
   create #favoriterestaurant as restaurant
+  create #localStorage as localStorage
   map #identity as person
   FavoriteRestaurantPicker
     restaurant = restaurant
+    localStorage = localStorage
     person <- person

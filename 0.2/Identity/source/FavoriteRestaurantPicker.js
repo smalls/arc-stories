@@ -61,6 +61,7 @@ ${styles}
     <input value="{{searchText}}" on-input="_onSearch" placeholder="restaurant name">
   </div>
   <div>
+    <div hidden="{{hasMatches}}">No matches found.</div>
     <x-list items="{{items}}"><template>${predictionItem}</template></x-list>
   </div>
 </div>
@@ -88,23 +89,44 @@ ${styles}
         this._receiveAutocomplete(places);
       });
     }
+    _receiveAutocomplete(places) {
+      let localBusinesses = this._views.get('localStorage');
+      let LocalBusiness = localBusinesses.entityClass;
+
+      let predictions = places && places.predictions ? places.predictions : [];
+
+      localBusinesses.toList().then(l=>l.forEach(old => { localBusinesses.remove(old)}));
+
+      predictions.forEach(place => {
+        let localBusiness = new LocalBusiness({
+          id: place.place_id,
+          name: place.structured_formatting.main_text,
+          disambiguatingDescription: place.structured_formatting.secondary_text
+        });
+        localBusinesses.store(localBusiness);
+      });
+    }
     _onSelect(e, b, c, d, f) {
       debugger;
     }
-    _receiveAutocomplete(places) {
-      let predictions = (places && places.predictions ? places.predictions : [])
-      .map(predict => {
-        return {place_id: predict.place_id,
-          name: predict.structured_formatting.main_text,
-          description: predict.structured_formatting.secondary_text}
+    /*
+    _receiveRawEstablishments(establishments) {
+      this._setState({predictions});
+    }
+    */
+    _render(props, state) {
+      return {
+        items: state.predictions,
+        hasMatches: state.predictions && state.predictions.length>0
+      };
+    }
+    _willReceiveProps(props) {
+
+      let predictions = props.localStorage.map(({rawData}, i) => {
+          return Object.assign({index: i}, rawData);
       });
 
       this._setState({predictions});
-    }
-    _render(props, state) {
-      return {
-        items: state.predictions
-      };
     }
     _onFavoriteFoodChanged(e, state) {
       const food = this._views.get('food');

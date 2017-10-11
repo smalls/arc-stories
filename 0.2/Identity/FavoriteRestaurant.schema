@@ -10,3 +10,8 @@ schema FavoriteRestaurant
   normative
     # in the future this will be a reference to Restaurant
     Text restaurant
+
+schema LocalBusiness
+  normative
+    Text name
+    Text disambiguatingDescription
