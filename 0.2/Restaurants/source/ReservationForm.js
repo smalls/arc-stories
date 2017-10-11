@@ -170,6 +170,9 @@ ${styles}
 
       return result;
     }
+    _shouldRender(props, state) {
+      return Boolean(state.currentEvent);
+    }
     _render(props, state) {
       // TODO(noelutz): remove code that handles list rendering.
       // It has moved to ReservationAnnotation.js.

@@ -90,6 +90,9 @@ ${styles}
       local.setMinutes(date.getMinutes() - date.getTimezoneOffset());
       return local.toJSON().slice(0,16);
     }
+    _shouldRender(props, state) {
+      return Boolean(state.currentEvent);
+    }
     _render(props, state) {
       return {
         [`selected${state.currentEvent.participants}`]: true
