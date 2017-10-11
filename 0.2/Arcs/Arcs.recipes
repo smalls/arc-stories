@@ -5,15 +5,9 @@
 # subject to an additional IP rights grant found at
 # http://polymer.github.io/PATENTS.txt
 
-import 'PersonBar.manifest'
+import 'Launcher.manifest'
 
 recipe
-  map #identities as people
-  PersonBar
-    people <- people
-
-#import 'PersonList.manifest'
-#recipe
-#  map #identities as people
-#  PersonList
-#    people <- people
+  map #arcmetadata as arcs
+  Launcher
+    arcs <- arcs

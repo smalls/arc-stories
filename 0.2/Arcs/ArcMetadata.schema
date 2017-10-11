@@ -5,15 +5,4 @@
 # subject to an additional IP rights grant found at
 # http://polymer.github.io/PATENTS.txt
 
-import 'PersonBar.manifest'
-
-recipe
-  map #identities as people
-  PersonBar
-    people <- people
-
-#import 'PersonList.manifest'
-#recipe
-#  map #identities as people
-#  PersonList
-#    people <- people
+import 'https://$cdn/artifacts/Arcs/ArcMetadata.schema'
