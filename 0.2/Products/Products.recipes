@@ -21,7 +21,7 @@ import 'https://$cdn/artifacts/Products/ShowProducts.manifest'
 
 recipe
   copy #shortlist as shortlist
-  map as person
+  map Somebody as person
   ShowProducts
     list <- shortlist
   GiftList
