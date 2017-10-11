@@ -281,28 +281,28 @@ ${styles}
       const start = this._convertStartTimeToMinutes(startTime);
       return `top: ${start/2}px; height: ${duration/2}px`;
     }
-    _onPreviousDayClick(e, state) {
+    _onPreviousDayClick(e) {
       const date = new Date(this._savedStartDate);
       date.setDate(date.getDate() - 1);
       date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
       this._storeNewEvent(date.toJSON().slice(0,16));
     }
-    _onNextDayClick(e, state) {
+    _onNextDayClick(e) {
       const date = new Date(this._savedStartDate);
       date.setDate(date.getDate() + 1);
       date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
       this._storeNewEvent(date.toJSON().slice(0,16));
     }
-    _onDateChanged(e, state) {
+    _onDateChanged(e) {
       this._storeNewEvent(e.data.value + this._savedStartDate.slice(10));
     }
-    _onTimeClick(e, state) {
+    _onTimeClick(e) {
       this._storeNewEvent(this._savedStartDate.slice(0, 11) + e.data.value);
     }
-    _expandCalendar(e, state) {
+    _expandCalendar(e) {
       this._setState({ expanded: true });
     }
-    _collapseCalendar(e, state) {
+    _collapseCalendar(e) {
       this._setState({ expanded: false });
     }
     _storeNewEvent(startDate) {
