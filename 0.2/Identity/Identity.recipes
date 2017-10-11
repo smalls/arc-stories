@@ -6,10 +6,18 @@
 # http://polymer.github.io/PATENTS.txt
 
 import 'FavoriteFoodPicker.manifest'
+import 'FavoriteRestaurantPicker.manifest'
 
 recipe
   create #favorite as food
   map #identity as person
   FavoriteFoodPicker
     food = food
+    person <- person
+
+recipe
+  create #favoriterestaurant as restaurant
+  map #identity as person
+  FavoriteRestaurantPicker
+    restaurant = restaurant
     person <- person
