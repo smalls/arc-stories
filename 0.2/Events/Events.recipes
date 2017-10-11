@@ -8,7 +8,7 @@
 import 'Calendar.manifest'
 
 recipe
-  ? as event
+  use as event
   Calendar
     event = event
 
