@@ -44,7 +44,7 @@ defineParticle(({DomParticle}) => {
   <div class="item">
     <div class="title">{{name}}</div>
     <div style="display:none;">{{place_id}}</div>
-    <div class="subtext">{{description}}</div>
+    <div class="subtext">{{address}}</div>
   </div>
   `.trim();
 
@@ -67,7 +67,10 @@ ${styles}
 </div>
     `.trim();
 
+  let serviceRoot = `https://xenonjs.com/services/http/php`;
+
   return class extends DomParticle {
+
     get template() {
       return template;
     }
@@ -76,12 +79,11 @@ ${styles}
       let loc = `37.7610927,-122.4208173`;
       let radius = `1000`;
 
-      let type = `establishment`;
-      let service = `https://xenonjs.com/services/http/php/places-autocomplete.php`;
-
       let input = e.data.value;
 
-      let request = `${service}?location=${loc}&radius=${radius}&types=${type}&input=${input}`
+      let type = `establishment`;
+      let service = `${serviceRoot}/places-autocomplete.php`;
+      let request = `${service}?location=${loc}&radius=${radius}&types=${type}&input=${input}`;
 
       fetch(request).then(response => {
         return response.json();
@@ -90,30 +92,40 @@ ${styles}
       });
     }
     _receiveAutocomplete(places) {
-      let localBusinesses = this._views.get('localStorage');
-      let LocalBusiness = localBusinesses.entityClass;
+      let choices = this._views.get('choices');
+      let FavoriteRestaurant = choices.entityClass;
 
       let predictions = places && places.predictions ? places.predictions : [];
 
-      localBusinesses.toList().then(l=>l.forEach(old => { localBusinesses.remove(old)}));
+      choices.toList().then(list => list.forEach(
+        oldEntry => choices.remove(oldEntry)
+      ));
 
       predictions.forEach(place => {
-        let localBusiness = new LocalBusiness({
-          id: place.place_id,
-          name: place.structured_formatting.main_text,
-          disambiguatingDescription: place.structured_formatting.secondary_text
+        let service = `${serviceRoot}/place-details.php`;
+        let request = `${service}?placeid=${place.place_id}`;
+
+        fetch(request).then(response => {
+          return response.json();
+        }).then(place => {
+          if (!place.result.types.includes('cafe')
+              && !place.result.types.includes('food')
+              && !place.result.types.includes('restaurant')) {
+            return;
+          }
+
+          let option = new FavoriteRestaurant({
+            placesId: place.result.place_id,
+            name: place.result.name,
+            address: place.result.formatted_address
+          });
+          choices.store(option);
         });
-        localBusinesses.store(localBusiness);
       });
     }
-    _onSelect(e, b, c, d, f) {
-      debugger;
+    _onSelect(e, state, props) {
+      let selected = state.predictions[e.data.key];
     }
-    /*
-    _receiveRawEstablishments(establishments) {
-      this._setState({predictions});
-    }
-    */
     _render(props, state) {
       return {
         items: state.predictions,
@@ -121,8 +133,7 @@ ${styles}
       };
     }
     _willReceiveProps(props) {
-
-      let predictions = props.localStorage.map(({rawData}, i) => {
+      let predictions = props.choices.map(({rawData}, i) => {
           return Object.assign({index: i}, rawData);
       });
 
@@ -134,5 +145,4 @@ ${styles}
       food.store(new food.entityClass({food: e.data.value}));
     }
   };
-
 });

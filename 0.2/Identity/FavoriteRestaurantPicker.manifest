@@ -10,7 +10,7 @@ import 'FavoriteRestaurant.schema'
 import 'https://$cdn/artifacts/People/Person.schema'
 
 particle FavoriteRestaurantPicker in 'source/FavoriteRestaurantPicker.js'
-  FavoriteRestaurantPicker(in Person person, inout [LocalBusiness] localStorage, inout [FavoriteRestaurant] restaurant)
+  FavoriteRestaurantPicker(in Person person, inout [FavoriteRestaurant] choices, inout [FavoriteRestaurant] favorites)
   affordance dom
   consume root
   description `select ${person}'s favorite restaurants`

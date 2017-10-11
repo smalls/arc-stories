@@ -16,10 +16,10 @@ recipe
     person <- person
 
 recipe
-  create #favoriterestaurant as restaurant
-  create #localStorage as localStorage
+  create #favorites as favorites
+  create #choices as choices
   map #identity as person
   FavoriteRestaurantPicker
-    restaurant = restaurant
-    localStorage = localStorage
+    favorites = favorites
+    choices = choices
     person <- person
