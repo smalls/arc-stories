@@ -12,4 +12,4 @@ particle Calendar in 'source/Calendar.js'
   Calendar(inout Event event)
   consume action
   consume modifier
-  description `Calendar`
+  description `use calendar`
