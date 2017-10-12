@@ -60,6 +60,9 @@ defineParticle(({DomParticle, resolver}) => {
     background-color: #1873cd;
     text-align: left;
   }
+  [${host}] [iscustom] {
+    display: none;
+  }
 </style>
 
 <div ${host}>
@@ -67,7 +70,8 @@ defineParticle(({DomParticle, resolver}) => {
   <template chat-message>
     <div message isme$="{{isme}}">
       <div name><span avatar><img src="{{src}}" title="{{name}}" alt="{{name}}"><b>{{name}}</b> - </span><i>{{blurb}}</i></div>
-      <div content>{{content}}</div>
+      <div content iscustom$="{{iscustom}}">{{content}}</div>
+      <div slotid="custom_message" subid$="{{subId}}"></div>
     </div>
   </template>
 
@@ -99,12 +103,14 @@ defineParticle(({DomParticle, resolver}) => {
       }
     }
     renderMessages(messages, user, people) {
-      return messages.map(m => {
+      return messages.map((m, i) => {
         let sender = people.find(p => p.name === m.name);
         let avatar = sender && sender.avatar || 'user.jpg';
         return {
+          iscustom: Boolean(m.type && m.type.length),
           content: m.content,
           name: m.name,
+          subId: i,
           blurb: m.time || '',
           isme: m.name === user.name,
           src: resolver(`https://$cdn/assets/avatars/${avatar}`)
