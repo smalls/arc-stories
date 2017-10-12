@@ -8,6 +8,6 @@
 import 'Launcher.manifest'
 
 recipe
-  map #arcmetadata as arcs
+  use #arcmetadata as arcs
   Launcher
-    arcs <- arcs
+    arcs = arcs

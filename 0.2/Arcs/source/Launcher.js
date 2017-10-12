@@ -12,9 +12,11 @@ defineParticle(({DomParticle}) => {
 
   let host = 'arcs-list';
 
-  let template = `
+  const html = (strings, ...values) => (strings[0]  + values.map((v, i) => v + strings[i+1]).join('')).trim();
+
+  let style = html`
 <style>
-  [${host}] a {
+  [${host}] [arc-item] {
     display: inline-block;
     width: 96px;
     margin: 16px;
@@ -22,8 +24,21 @@ defineParticle(({DomParticle}) => {
     text-decoration: none;
     text-align: center;
   }
+  [${host}] a {
+    color: inherit;
+    text-decoration: none;
+  }
   [${host}] [icon] {
     padding: 8px;
+  }
+  [${host}] [icon] [delete] {
+    visibility: hidden;
+    color: darkred;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  [${host}] [icon]:hover [delete] {
+    visibility: initial;
   }
   [${host}] [description] {
     font-size: 0.8em;
@@ -35,17 +50,27 @@ defineParticle(({DomParticle}) => {
     font-size: 48px;
   }
 </style>
+`;
+
+  let template = html`
+
+${style}
 
 <div ${host}>
-  <template arc>
-    <a href="{{href}}" target="_blank" on-click="_onSelect" key="{{index}}">
-      <div icon style%="{{iconStyle}}"><i class="material-icons">{{icon}}</i></div>
-      <div description title="{{description}}" unsafe-html="{{description}}"></div>
-    </a>
-  </template>
   <div>{{arcs}}</div>
 </div>
-    `.trim();
+
+<template arc>
+  <div arc-item>
+    <div icon style%="{{iconStyle}}">
+      <a href="{{href}}" target="_blank"><i class="material-icons">{{icon}}</i><a>
+      <span delete on-click="_onDelete" key="{{index}}">x</span>
+    </div>
+    <a href="{{href}}" target="_blank"><div description title="{{description}}" unsafe-html="{{description}}"></div></a>
+  </div>
+</template>
+
+  `;
 
   return class extends DomParticle {
     get template() {
@@ -78,6 +103,10 @@ defineParticle(({DomParticle}) => {
     }
     _onSelect(e, state) {
       //this._views.get('selected').set(this._props.list[e.data.key]);
+    }
+    _onDelete(e) {
+      let key = e.data.key;
+      this._views.get('arcs').remove(this._props.arcs[key]);
     }
   };
 
