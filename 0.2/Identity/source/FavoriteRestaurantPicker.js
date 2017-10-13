@@ -113,12 +113,7 @@ ${styles}
         oldEntry => choices.remove(oldEntry)
       ));
 
-      let favoritesPlaceIds = views.get('favorites').toList().then(
-        favorites => favorites.map(favorite => favorite.placesId));
-      let filteredPredictions = favoritesPlaceIds.then(favoritesPlaceIds => predictions.filter(
-        prediction => !favoritesPlaceIds.includes(prediction.place_id)));
-
-      filteredPredictions.then(filteredPredictions => filteredPredictions.forEach(place => {
+      predictions.forEach(place => {
         let service = `${serviceRoot}/place-details.php`;
         let request = `${service}?placeid=${place.place_id}`;
 
@@ -138,7 +133,7 @@ ${styles}
           });
           choices.store(option);
         });
-      }));
+      });
     }
     _onClickChoice(e, state, views) {
       let favorites = views.get('favorites');
@@ -164,18 +159,23 @@ ${styles}
         favorite => {
           if (favorite.placesId==clickedFavorite.placesId) {
             favorites.remove(favorite);
-
-            // XXX too - refresh the search list
           }
         }
       ));
     }
     _render(props, state) {
+      let choices = state.choices ? state.choices : [];
+      let favorites = state.favorites ? state.favorites : [];
+      let favoritesPlaceIds = favorites.map(favorite => favorite.placesId);
+      let filteredChoices = (favoritesPlaceIds.length > 0)
+        ? choices.filter(choice => !favoritesPlaceIds.includes(choice.placesId))
+        : choices;
+
       return {
-        choices: state.choices,
-        hasMatches: state.choices && state.choices.length>0,
-        favorites: state.favorites,
-        hasFavorites: state.favorites && state.favorites.length>0
+        choices: filteredChoices,
+        hasMatches: filteredChoices.length > 0,
+        favorites: favorites,
+        hasFavorites: favorites.length>0
       };
     }
     _willReceiveProps(props) {
