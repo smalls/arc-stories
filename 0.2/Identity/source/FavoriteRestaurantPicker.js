@@ -66,6 +66,7 @@ ${styles}
   <div><u>Look for Favorites</u></div>
   <div search>
     <input value="{{searchText}}" on-input="_onSearch" placeholder="search for local restaurants">
+    <i class="material-icons">search</i>
   </div>
   <div>
     <div hidden="{{hasMatches}}">No matches found.</div>
