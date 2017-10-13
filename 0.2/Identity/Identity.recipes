@@ -16,8 +16,8 @@ recipe
     person <- person
 
 recipe
-  create #favorites as favorites
-  create #choices as choices
+  create #favoriterestaurants as favorites
+  create #choices #nosync as choices
   map #identity as person
   FavoriteRestaurantPicker
     favorites = favorites
