@@ -48,8 +48,14 @@ defineParticle(({DomParticle}) => {
   </div>
   `.trim();
 
-  let predictionItem = `
-  <div class="place" on-click="_onSelect" key="{{index}}">
+  let choicesItem = `
+  <div class="place" on-click="_onClickChoice" key="{{index}}">
+    ${item}
+  </div>
+  `.trim();
+
+  let favoritesItem = `
+  <div class="place" on-click="_onClickFavorite" key="{{index}}">
     ${item}
   </div>
   `.trim();
@@ -57,12 +63,18 @@ defineParticle(({DomParticle}) => {
   let template = `
 ${styles}
 <div ${host}>
+  <div><u>Look for Favorites</u></div>
   <div search>
-    <input value="{{searchText}}" on-input="_onSearch" placeholder="restaurant name">
+    <input value="{{searchText}}" on-input="_onSearch" placeholder="search for local restaurants">
   </div>
   <div>
     <div hidden="{{hasMatches}}">No matches found.</div>
-    <x-list items="{{items}}"><template>${predictionItem}</template></x-list>
+    <x-list items="{{choices}}"><template>${choicesItem}</template></x-list>
+  </div>
+  <div><u>Favorites List</u></div>
+  <div>
+    <div hidden="{{hasFavorites}}">No favorites selected.</div>
+    <x-list items="{{favorites}}"><template>${favoritesItem}</template></x-list>
   </div>
 </div>
     `.trim();
@@ -74,7 +86,7 @@ ${styles}
     get template() {
       return template;
     }
-    _onSearch(e) {
+    _onSearch(e, state, views) {
       // copied from ../../Restaurants/source/FindRestaurants.js
       let loc = `37.7610927,-122.4208173`;
       let radius = `1000`;
@@ -88,11 +100,11 @@ ${styles}
       fetch(request).then(response => {
         return response.json();
       }).then(places => {
-        this._receiveAutocomplete(places);
+        this._receiveAutocomplete(places, views);
       });
     }
-    _receiveAutocomplete(places) {
-      let choices = this._views.get('choices');
+    _receiveAutocomplete(places, views) {
+      let choices = views.get('choices');
       let FavoriteRestaurant = choices.entityClass;
 
       let predictions = places && places.predictions ? places.predictions : [];
@@ -101,7 +113,12 @@ ${styles}
         oldEntry => choices.remove(oldEntry)
       ));
 
-      predictions.forEach(place => {
+      let favoritesPlaceIds = views.get('favorites').toList().then(
+        favorites => favorites.map(favorite => favorite.placesId));
+      let filteredPredictions = favoritesPlaceIds.then(favoritesPlaceIds => predictions.filter(
+        prediction => !favoritesPlaceIds.includes(prediction.place_id)));
+
+      filteredPredictions.then(filteredPredictions => filteredPredictions.forEach(place => {
         let service = `${serviceRoot}/place-details.php`;
         let request = `${service}?placeid=${place.place_id}`;
 
@@ -121,23 +138,56 @@ ${styles}
           });
           choices.store(option);
         });
-      });
+      }));
     }
-    _onSelect(e, state, props) {
-      let selected = state.predictions[e.data.key];
+    _onClickChoice(e, state, views) {
+      let favorites = views.get('favorites');
+      let choices = views.get('choices');
+      let FavoriteRestaurant = favorites.entityClass;
+
+      let selected = state.choices[e.data.key];
+
+      let newFavorite = new FavoriteRestaurant({
+        placesId: selected.placesId,
+        name: selected.name,
+        address: selected.address
+      });
+
+      favorites.store(newFavorite);
+      choices.remove(newFavorite);
+    }
+    _onClickFavorite(e, state, views) {
+      var favorites = views.get('favorites');
+      var clickedFavorite = state.favorites[e.data.key];
+      // favorites.remove(clickedFavorite);
+      favorites.toList().then(flist => flist.forEach(
+        favorite => {
+          if (favorite.placesId==clickedFavorite.placesId) {
+            favorites.remove(favorite);
+
+            // XXX too - refresh the search list
+          }
+        }
+      ));
     }
     _render(props, state) {
       return {
-        items: state.predictions,
-        hasMatches: state.predictions && state.predictions.length>0
+        choices: state.choices,
+        hasMatches: state.choices && state.choices.length>0,
+        favorites: state.favorites,
+        hasFavorites: state.favorites && state.favorites.length>0
       };
     }
     _willReceiveProps(props) {
-      let predictions = props.choices.map(({rawData}, i) => {
+      let choices = props.choices.map(({rawData}, i) => {
           return Object.assign({index: i}, rawData);
       });
+      this._setState({choices});
 
-      this._setState({predictions});
+      let favorites = props.favorites.map(({rawData}, i) => {
+          return Object.assign({index: i}, rawData);
+      });
+      this._setState({favorites});
     }
     _onFavoriteFoodChanged(e, state) {
       const food = this._views.get('food');
