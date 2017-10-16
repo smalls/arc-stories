@@ -27,7 +27,7 @@ defineParticle(({DomParticle}) => {
 <div ${host} id={{subId}}>{{aFavoriteRestaurant}}</div>
 
 <template someones-favorite-restaurant>
-  <span>Favorite!</span>
+  <span>This is one of your favorite restaurants!</span>
 </template>
 
     `.trim();
