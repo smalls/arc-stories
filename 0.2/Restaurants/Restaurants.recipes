@@ -54,12 +54,3 @@ recipe
   FavoriteFoodAnnotation
     restaurants <- restaurants
     food <- food
-
-import 'FavoriteRestaurantAnnotation.manifest'
-
-recipe
-  map #favoriterestaurants as favrestaurants
-  use as restaurants
-  FavoriteRestaurantAnnotation
-    restaurants <- restaurants
-    favorites <- favrestaurants
