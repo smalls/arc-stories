@@ -63,6 +63,7 @@ ${style}
 <template arc>
   <div arc-item>
     <div icon style%="{{iconStyle}}">
+      <span delete style="visibility: hidden;">x</span>
       <a href="{{href}}" target="_blank"><i class="material-icons">{{icon}}</i><a>
       <span delete on-click="_onDelete" key="{{index}}">x</span>
     </div>

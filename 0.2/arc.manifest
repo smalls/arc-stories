@@ -11,7 +11,9 @@
 #import 'Identity/Identity.recipes'
 #import 'Finance/Finance.recipes'
 #import 'Points/Points.recipes'
-#import 'Accounts/Accounts.recipes'
-#import 'PlaidAccounts/PlaidAccounts.recipes'
 #import 'Products/Products.recipes'
+
 import 'Arcs/Arcs.recipes'
+
+#import 'Accounts/Accounts.recipes'
+import 'PlaidAccounts/PlaidAccounts.recipes'
