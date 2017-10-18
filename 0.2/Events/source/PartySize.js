@@ -94,9 +94,12 @@ ${styles}
       return Boolean(state.currentEvent);
     }
     _render(props, state) {
-      return {
-        [`selected${state.currentEvent.participants}`]: true
+      var partySize = parseInt(state.currentEvent.participants);
+      var selected = {};
+      for (let i = 1; i <= 21; ++i) {
+        selected[`selected${i}`] = Boolean(partySize == i);
       }
+      return selected;
     }
     _onPartySizeChanged(e, state) {
       let newEvent = Object.assign({}, state.currentEvent || {});

@@ -108,7 +108,6 @@ ${styles}
       <option value="21" selected$={{selected21}}>Larger party</option>
     </select>
   </div>
-
   <input type="datetime-local" value="{{date}}" on-change="_onDateChanged">
 </template>
 
@@ -177,20 +176,25 @@ ${styles}
       // TODO(noelutz): remove code that handles list rendering.
       // It has moved to ReservationAnnotation.js.
       const selectedRestaurant = props.selected;
+      let partySize = parseInt(state.currentEvent.participants) || 2;
       if (selectedRestaurant) {
-        return this._renderSingle(selectedRestaurant, state.currentEvent.startDate, state.currentEvent.participants || 2, true);
+        return this._renderSingle(selectedRestaurant, state.currentEvent.startDate, partySize, true);
       } else {
-        return this._renderList(props.list || [], state.currentEvent.startDate, state.currentEvent.participants || 2);
+        return this._renderList(props.list || [], state.currentEvent.startDate, partySize);
       }
     }
     _renderSingle(restaurant, date, partySize, showTimePicker) {
       let restaurantId = restaurant.rawData.id || "";
       let times = this.makeUpReservationTimes(restaurantId, partySize, date, 5);
+      let timePicker = {date};
+      for (let i = 1; i <= 21; ++i) {
+        timePicker[`selected${i}`] = Boolean(partySize == i);
+      }
       return {
         subId: restaurantId,
         timePicker: {
           $template: 'time-picker',
-          models: showTimePicker ? [{ [`selected${partySize}`]: true, date }] : []
+          models: showTimePicker ? [timePicker] : []
         },
         availableTimes: {
           $template: 'available-times',

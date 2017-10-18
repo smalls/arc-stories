@@ -172,17 +172,21 @@ ${styles}
     }
     _render(props, state) {
       if (props.list && props.list.length) {
-        return this._renderList(props.list, state.currentEvent.startDate, state.currentEvent.participants || 2);
+        return this._renderList(props.list, state.currentEvent.startDate, parseInt(state.currentEvent.participants) || 2);
       }
     }
     _renderSingle(restaurant, date, partySize, showTimePicker) {
       let restaurantId = restaurant.rawData.id || "";
       let times = this.makeUpReservationTimes(restaurantId, partySize, date, 5);
+      let timePicker = {date};
+      for (let i = 1; i <= 21; ++i) {
+        timePicker[`selected${i}`] = Boolean(partySize == i);
+      }
       return {
         subId: restaurantId,
         timePicker: {
           $template: 'time-picker',
-          models: showTimePicker ? [{ [`selected${partySize}`]: true, date }] : []
+          models: showTimePicker ? [timePicker] : []
         },
         availableTimes: {
           $template: 'available-times',
