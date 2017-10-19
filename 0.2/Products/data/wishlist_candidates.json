@@ -5,7 +5,7 @@
     "seller": "denile.com",
     "price": "$14.50",
     "shipDays": 7,
-    "image": "../assets/products/book.png"
+    "image": "assets/products/book.png"
   },
   {
     "name": "Power Tool Set",
@@ -13,7 +13,7 @@
     "seller": "denile.com",
     "price": "$59.00",
     "shipDays": 42,
-    "image": "../assets/products/powertool.png"
+    "image": "assets/products/powertool.png"
   },
   {
     "name": "Guardian of the Galaxy Figure",
@@ -21,7 +21,7 @@
     "seller": "denile.com",
     "price": "$75.00",
     "shipDays": 14,
-    "image": "../assets/products/galaxy.png"
+    "image": "assets/products/galaxy.png"
   },
   {
     "name": "Book: How to Draw",
