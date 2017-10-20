@@ -313,17 +313,17 @@ ${styles}
       let day;
       switch (delta) {
         case 0:
-          day = "today";
+          // default: nothing
           break;
         case 1:
-          day = "tomorrow";
+          day = "tomorrow,";
           break;
         default:
           day = t.toString().slice(0, now.getFullYear() === t.getFullYear() ? 10 : 15);
           break;
       }
 
-      return day;
+      return day ? `${day} ${timeString}` : timeString;
     }
     _convertStartTimeToMinutes(startTime) {
       const match = /(\d\d):(\d\d)/.exec(startTime);
