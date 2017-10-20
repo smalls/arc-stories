@@ -200,7 +200,11 @@ ${styles}
     }
     _willReceiveProps(props, state) {
       const event = props.event;
-      this._savedStartDate = event && event.startDate || '';
+      this._event = event;
+      this._savedStartDate = event && event.startDate || (new Date()).toJSON().slice(0,16);
+      if (!event.availability) {
+        this._storeNewEvent(this._savedStartDate);
+      }
     }
     _render(props, state) {
       const events = this._getEventsForDate(this._savedStartDate);
@@ -355,12 +359,13 @@ ${styles}
     _storeNewEvent(startDate) {
       const event = this._views.get('event');
       const conflicts = this._findConflicts(startDate);
-      event.set(new event.entityClass({
+      const newEvent = Object.assign({}, (this._event || {}), {
         startDate: startDate,
         endDate: startDate,
         availability: conflicts.length ? `busy with ${conflicts[0].name}` : 'free',
         humanReadableTime: this._generateHumanReadableTime(startDate)
-      }));
+      });
+      event.set(new event.entityClass(newEvent));
     }
   };
 
