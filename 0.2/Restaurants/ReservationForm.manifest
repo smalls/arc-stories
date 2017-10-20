@@ -13,3 +13,4 @@ particle ReservationForm in 'source/ReservationForm.js'
   ReservationForm(in Restaurant selected, inout Event event)
   consume action
   description `${event.description}`
+    event `reservation`
