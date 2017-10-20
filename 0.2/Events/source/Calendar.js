@@ -310,20 +310,15 @@ ${styles}
 
       const delta = (t.getTime() - now.getTime())/86400000;
 
-      let day;
       switch (delta) {
         case 0:
-          // default: nothing
-          break;
+          return `at ${timeString}`;
         case 1:
-          day = "tomorrow,";
-          break;
+          return `tomorrow, at ${timeString}`;
         default:
-          day = t.toString().slice(0, now.getFullYear() === t.getFullYear() ? 10 : 15);
-          break;
+          const day = t.toString().slice(0, now.getFullYear() === t.getFullYear() ? 10 : 15);
+          return `at ${timeString} on ${day}`
       }
-
-      return day ? `${day} ${timeString}` : timeString;
     }
     _convertStartTimeToMinutes(startTime) {
       const match = /(\d\d):(\d\d)/.exec(startTime);
