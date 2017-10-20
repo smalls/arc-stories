@@ -81,7 +81,7 @@ ${styles}
         this._storeNewEvent(event);
         this._setState({ currentEvent: event });
       } else {
-        const event = props.event.rawData;
+        const event = props.event;
         this._setState({ currentEvent: event });
       }
     }

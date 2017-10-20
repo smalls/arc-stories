@@ -73,7 +73,7 @@ ${styles}
       return template;
     }
     _render(props, state) {
-      let food = props.food && props.food.length && props.food[props.food.length - 1].rawData.food || '';
+      let food = props.food && props.food && props.food.food || '';
       return {
         [`selected${food}`]: true
       }
@@ -81,7 +81,7 @@ ${styles}
     _onFavoriteFoodChanged(e, state) {
       const food = this._views.get('food');
 
-      food.store(new food.entityClass({food: e.data.value}));
+      food.set(new food.entityClass({food: e.data.value}));
     }
   };
 

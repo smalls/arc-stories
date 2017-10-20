@@ -121,14 +121,38 @@ ${styles}
       return template;
     }
     _willReceiveProps(props, state) {
+      let event;
+
       if (!props.event) {
-        const now = this.toDateInputValue(new Date());
-        const event = { startDate: now, endDate: now, participants: 2 };
+        /* Default time selection:
+         *  - if later than 10pm, book evening tomorrow
+         *  - if earlier than 5pm, book this evening
+         *  - round up to next half hour and set seconds to 0
+         * 
+         * (i.e. earliest can be 5:30pm and latest 10pm)
+         */
+        let when = new Date();
+        if (when.getHours() >= 22) {
+          when.setDate(when.getDate() + 1);
+          when.setHours(19);
+        } else if (when.getHours() < 17) {
+          when.setHours(19);
+        }
+        when.setMinutes(when.getMinutes() > 30 ? 60 : 30);
+        when.setSeconds(0);
+        when.setMilliseconds(0);
+
+        const whenString = this.toDateInputValue(when);
+        event = { startDate: whenString, endDate: whenString, participants: 2 };
         this._storeNewEvent(event);
-        this._setState({ currentEvent: event });
       } else {
-        const event = props.event.rawData;
-        this._setState({ currentEvent: event });
+        event = props.event;
+      }
+      this._setState({ currentEvent: event });
+
+      if (props.selected && !event.description) {
+        event.description = this.createDescription(props.selected.id, event.participants, event.startDate);
+        this._storeNewEvent(event);
       }
     }
     toDateInputValue(date) {
@@ -169,6 +193,24 @@ ${styles}
 
       return result;
     }
+    createDescription(restaurantId, participants, startDate) {
+      let times = this.makeUpReservationTimes(restaurantId, participants, startDate, 5);
+      
+      let closest = null;
+      
+      times.map(({time, notAvailable}, i) => {
+        if (!notAvailable) {
+          if (!closest || i <= 2) {
+            // 2 is the closest time to default time
+            closest = time;
+          }
+        }
+      });
+    
+      return closest
+        ? `table for ${participants} available at ${closest}`
+        : `no table for ${participants} available within 2 hours`;
+    }
     _shouldRender(props, state) {
       return Boolean(state.currentEvent);
     }
@@ -179,12 +221,10 @@ ${styles}
       let partySize = parseInt(state.currentEvent.participants) || 2;
       if (selectedRestaurant) {
         return this._renderSingle(selectedRestaurant, state.currentEvent.startDate, partySize, true);
-      } else {
-        return this._renderList(props.list || [], state.currentEvent.startDate, partySize);
       }
     }
     _renderSingle(restaurant, date, partySize, showTimePicker) {
-      let restaurantId = restaurant.rawData.id || "";
+      let restaurantId = restaurant.id || "";
       let times = this.makeUpReservationTimes(restaurantId, partySize, date, 5);
       let timePicker = {date};
       for (let i = 1; i <= 21; ++i) {
@@ -200,11 +240,6 @@ ${styles}
           $template: 'available-times',
           models: times
         }
-      }
-    }
-    _renderList(list, date, partySize) {
-      return {
-        items: list.map(restaurant => this._renderSingle(restaurant, date, partySize, false))
       }
     }
     _onDateChanged(e, state) {

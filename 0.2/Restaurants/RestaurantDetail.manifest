@@ -13,4 +13,4 @@ particle RestaurantDetail in 'source/RestaurantDetail.js'
   affordance dom
   consume detail
     provide action
-  description `show restaurant details`
+#  description `show restaurant details`
