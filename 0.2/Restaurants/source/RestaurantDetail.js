@@ -68,7 +68,7 @@ ${styles}
     _willReceiveProps(props) {
       let {selected} = props;
       if (selected) {
-        let item = selected.rawData;
+        let item = selected;
         if (item && item.id) {
           this._fetchDetail(item.reference);
         }

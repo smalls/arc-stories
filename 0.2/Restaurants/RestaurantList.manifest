@@ -14,4 +14,5 @@ particle RestaurantList in 'source/RestaurantList.js'
     provide modifier
     provide set of annotation
       view list
-  description `show ${list}`
+# removing description for now to clean up suggestions
+#  description `show ${list}`

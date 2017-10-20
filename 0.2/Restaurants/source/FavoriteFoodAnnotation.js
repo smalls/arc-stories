@@ -41,7 +41,7 @@ defineParticle(({DomParticle}) => {
     }
     _render(props, state) {
       const list = props.restaurants;
-      const food = props.food.length && props.food[props.food.length - 1].food || '';
+      const food = props.food && props.food.food || '';
       return {
         items: list.map(restaurant => this._renderHaveFood(restaurant, food))
       };

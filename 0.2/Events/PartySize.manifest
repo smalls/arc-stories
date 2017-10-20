@@ -12,4 +12,5 @@ particle PartySize in 'source/PartySize.js'
   PartySize(inout Event event)
   affordance dom
   consume modifier
-  description `number of people`
+# removing description for now to clean up suggestions
+#  description `number of people`

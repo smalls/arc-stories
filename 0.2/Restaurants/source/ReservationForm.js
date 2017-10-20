@@ -127,7 +127,7 @@ ${styles}
         this._storeNewEvent(event);
         this._setState({ currentEvent: event });
       } else {
-        const event = props.event.rawData;
+        const event = props.event;
         this._setState({ currentEvent: event });
       }
     }
@@ -184,7 +184,7 @@ ${styles}
       }
     }
     _renderSingle(restaurant, date, partySize, showTimePicker) {
-      let restaurantId = restaurant.rawData.id || "";
+      let restaurantId = restaurant.id || "";
       let times = this.makeUpReservationTimes(restaurantId, partySize, date, 5);
       let timePicker = {date};
       for (let i = 1; i <= 21; ++i) {

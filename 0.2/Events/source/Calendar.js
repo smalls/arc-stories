@@ -200,7 +200,7 @@ ${styles}
     }
     _willReceiveProps(props, state) {
       const event = props.event;
-      this._savedStartDate = event && event.rawData.startDate || '';
+      this._savedStartDate = event && event.startDate || '';
     }
     _render(props, state) {
       const events = this._getEventsForDate(this._savedStartDate);

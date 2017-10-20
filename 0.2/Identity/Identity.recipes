@@ -8,7 +8,7 @@
 import 'FavoriteFoodPicker.manifest'
 
 recipe
-  create #favoritefood as food
+  create #favorite as food
   map #identity as person
   FavoriteFoodPicker
     food = food
