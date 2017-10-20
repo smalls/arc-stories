@@ -12,4 +12,4 @@ import '../Events/Event.schema'
 particle ReservationForm in 'source/ReservationForm.js'
   ReservationForm(in Restaurant selected, inout Event event)
   consume action
-  description `reservation details`
+  description `${event.description}`

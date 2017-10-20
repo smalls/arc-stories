@@ -11,3 +11,4 @@ schema Event
     Text endDate
     Text startDate
     Text participants
+    Text description
