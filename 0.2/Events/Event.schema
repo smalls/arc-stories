@@ -12,3 +12,5 @@ schema Event
     Text startDate
     Text participants
     Text description
+    Text availability
+    Text humanReadableTime

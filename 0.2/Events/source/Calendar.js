@@ -223,20 +223,24 @@ ${styles}
     }
     _getEventsForDate(dateString) {
       const date = new Date(dateString);
+      let calendar;
       switch (date.getDay()) {
         case 0:
-          return [
+          calendar = [
             {
               name: 'Sleep in',
-              style: this._getStyleForTimeBlock('06:00', 180)
+              time: '06:00',
+              length: 180
             },
             {
               name: 'Brunch',
-              style: this._getStyleForTimeBlock('11:00', 60)
+              time: '11:00',
+              length: 60
             },
             {
               name: 'Dinner',
-              style: this._getStyleForTimeBlock('19:00', 60)
+              time: '19:00',
+              length: 60
             }
           ];
         case 1:
@@ -245,33 +249,81 @@ ${styles}
           return [
             {
               name: 'Drop off dry cleaning',
-              style: this._getStyleForTimeBlock('08:00', 60)
+              time: '08:00',
+              length: 60
             },
             {
               name: 'Meeting',
-              style: this._getStyleForTimeBlock('10:00', 90)
+              time: '10:00',
+              length: 90
             },
             {
               name: 'Work time',
-              style: this._getStyleForTimeBlock('15:00', 120)
+              time: '15:00',
+              length: 120
             }
           ];
         default:
           return [
             {
               name: 'Running club',
-              style: this._getStyleForTimeBlock('07:00', 90)
+              time: '07:00',
+              length: 90
             },
             {
               name: 'Meeting',
-              style: this._getStyleForTimeBlock('14:00', 90)
+              time: '14:00',
+              length: 90
             },
             {
               name: 'Pick up dry cleaning',
-              style: this._getStyleForTimeBlock('17:00', 60)
+              time: '17:00',
+              length: 60
             }
           ];
       }
+
+      calendar.forEach(event => event.style = this._getStyleForTimeBlock(event.time, event.length));
+
+      return calendar;
+    }
+    _findConflicts(startTime) {
+      const calendar = this._getEventsForDate(startTime);
+
+      const t = new Date(startTime);
+      const startMinute = t.getHours()*60 + t.getMinutes();
+
+      return calendar.filter(event => {
+        const eventStart = this._convertStartTimeToMinutes(event.time);
+
+        return (eventStart <= startMinute) && (eventStart + event.length >= startMinute);
+      });
+    }
+    _generateHumanReadableTime(time) {
+      const timeString = time.slice(12, 16);
+
+      const now = new Date();
+      const t = new Date(t);
+
+      now.setHours(0);
+      t.setHours(0);
+
+      const delta = (t.getTime() - now.getTime())/86400000;
+
+      let day;
+      switch (delta) {
+        case 0:
+          day = "today";
+          break;
+        case 1:
+          day = "tomorrow";
+          break;
+        default:
+          day = t.toString().slice(0, now.getFullYear() === t.getFullYear() ? 10 : 15);
+          break;
+      }
+
+      return day;
     }
     _convertStartTimeToMinutes(startTime) {
       const match = /(\d\d):(\d\d)/.exec(startTime);
@@ -307,9 +359,12 @@ ${styles}
     }
     _storeNewEvent(startDate) {
       const event = this._views.get('event');
+      const conflicts = this._findConflicts(startDate);
       event.set(new event.entityClass({
         startDate: startDate,
-        endDate: startDate
+        endDate: startDate,
+        availability: conflicts.length ? `busy with ${conflicts[0].name}` : 'free',
+        humanReadableTime: this._generateHumanReadableTime(startDate)
       }));
     }
   };
