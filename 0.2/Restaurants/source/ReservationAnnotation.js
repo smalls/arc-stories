@@ -125,7 +125,6 @@ ${styles}
       if (!props.event) {
         const now = this.toDateInputValue(new Date());
         const event = { startDate: now, endDate: now, participants: 2 };
-        this._storeNewEvent(event);
         this._setState({ currentEvent: event });
       } else {
         const event = props.event;
@@ -138,10 +137,11 @@ ${styles}
       return local.toJSON().slice(0,16);
     }
     makeUpReservationTimes(id, partySize, date, n) {
-      // Start at (n-1)/2 before the desired reservation time
-      let t = new Date((date ? new Date(date) : new Date()).getTime() - (n-1)/2*3600*1000);
+      // Start at (n-1)/2 half hours before the desired reservation time
+      let t = new Date(date);
+      t.setMinutes(t.getMinutes() - (n-1)/2*30);
       let hour = (t.getHours()) % 24;
-      let minute = t.getMinutes() > 30 ? "30" : "00";
+      let minute = t.getMinutes() >= 30 ? "30" : "00";
 
       // Seed per restaurant and day
       let seed = parseInt(id.substr(0, 8), 16);
@@ -175,19 +175,11 @@ ${styles}
         return this._renderList(props.list, state.currentEvent.startDate, parseInt(state.currentEvent.participants) || 2);
       }
     }
-    _renderSingle(restaurant, date, partySize, showTimePicker) {
+    _renderSingle(restaurant, date, partySize) {
       let restaurantId = restaurant.id || "";
       let times = this.makeUpReservationTimes(restaurantId, partySize, date, 5);
-      let timePicker = {date};
-      for (let i = 1; i <= 21; ++i) {
-        timePicker[`selected${i}`] = Boolean(partySize == i);
-      }
       return {
         subId: restaurantId,
-        timePicker: {
-          $template: 'time-picker',
-          models: showTimePicker ? [timePicker] : []
-        },
         availableTimes: {
           $template: 'available-times',
           models: times
@@ -196,22 +188,8 @@ ${styles}
     }
     _renderList(list, date, partySize) {
       return {
-        items: list.map(restaurant => this._renderSingle(restaurant, date, partySize, false))
+        items: list.map(restaurant => this._renderSingle(restaurant, date, partySize))
       }
-    }
-    _onDateChanged(e, state) {
-      let newEvent = Object.assign({}, state.currentEvent || { participants: 2 });
-      newEvent.startDate = newEvent.endDate = e.data.value;
-      this._storeNewEvent(newEvent);
-    }
-    _onPartySizeChanged(e, state) {
-      let newEvent = Object.assign({}, state.currentEvent || {});
-      newEvent.participants = e.data.value;
-      this._storeNewEvent(newEvent);
-    }
-    _storeNewEvent(newEvent) {
-      const event = this._views.get('event');
-      event.set(new event.entityClass(newEvent));
     }
   };
 

@@ -75,20 +75,9 @@ ${styles}
       return template;
     }
     _willReceiveProps(props, state) {
-      if (!props.event) {
-        const now = this.toDateInputValue(new Date());
-        const event = { startDate: now, endDate: now, participants: 2 };
-        this._storeNewEvent(event);
-        this._setState({ currentEvent: event });
-      } else {
-        const event = props.event;
-        this._setState({ currentEvent: event });
-      }
-    }
-    toDateInputValue(date) {
-      let local = new Date(date);
-      local.setMinutes(date.getMinutes() - date.getTimezoneOffset());
-      return local.toJSON().slice(0,16);
+      const event = Object.assign({}, props.event.rawData || { participants: 2 });
+
+      this._setState({ currentEvent: event });      
     }
     _shouldRender(props, state) {
       return Boolean(state.currentEvent);

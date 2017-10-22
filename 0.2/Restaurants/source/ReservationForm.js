@@ -123,7 +123,7 @@ ${styles}
     _willReceiveProps(props, state) {
       let event;
 
-      if (!props.event) {
+      if (!props.event || !props.event.startDate) {
         /* Default time selection:
          *  - if later than 10pm, book evening tomorrow
          *  - if earlier than 5pm, book this evening
@@ -132,26 +132,33 @@ ${styles}
          * (i.e. earliest can be 5:30pm and latest 10pm)
          */
         let when = new Date();
+
         if (when.getHours() >= 22) {
           when.setDate(when.getDate() + 1);
           when.setHours(19);
+          when.setMinutes(0);
         } else if (when.getHours() < 17) {
           when.setHours(19);
+          when.setMinutes(0);
+        } else {
+          when.setMinutes(when.getMinutes() + 15);
+          when.setMinutes(when.getMinutes() > 30 ? 60 : 30);
         }
-        when.setMinutes(when.getMinutes() > 30 ? 60 : 30);
         when.setSeconds(0);
         when.setMilliseconds(0);
 
         const whenString = this.toDateInputValue(when);
         event = { startDate: whenString, endDate: whenString, participants: 2 };
-        this._storeNewEvent(event);
       } else {
-        event = props.event;
+        event = Object.assign({}, props.event.rawData);
       }
       this._setState({ currentEvent: event });
 
       if (props.selected && !event.description) {
         event.description = this.createDescription(props.selected.id, event.participants, event.startDate);
+      }
+
+      if (!props.event || JSON.stringify(event) !== JSON.stringify(props.event.rawData)) {
         this._storeNewEvent(event);
       }
     }
@@ -161,10 +168,11 @@ ${styles}
       return local.toJSON().slice(0,16);
     }
     makeUpReservationTimes(id, partySize, date, n) {
-      // Start at (n-1)/2 before the desired reservation time
-      let t = new Date((date ? new Date(date) : new Date()).getTime() - (n-1)/2*3600*1000);
+      // Start at (n-1)/2 half hours before the desired reservation time
+      let t = new Date(date);
+      t.setMinutes(t.getMinutes() - (n-1)/2*30);
       let hour = (t.getHours()) % 24;
-      let minute = t.getMinutes() > 30 ? "30" : "00";
+      let minute = t.getMinutes() >= 30 ? "30" : "00";
 
       // Seed per restaurant and day
       let seed = parseInt(id.substr(0, 8), 16);
@@ -208,8 +216,8 @@ ${styles}
       });
     
       return closest
-        ? `table for ${participants} available at ${closest}`
-        : `no table for ${participants} available within 2 hours`;
+        ? `Table for ${participants} available at ${closest}`
+        : `No table for ${participants} available within 2 hours`;
     }
     _shouldRender(props, state) {
       return Boolean(state.currentEvent);
@@ -220,10 +228,10 @@ ${styles}
       const selectedRestaurant = props.selected;
       let partySize = parseInt(state.currentEvent.participants) || 2;
       if (selectedRestaurant) {
-        return this._renderSingle(selectedRestaurant, state.currentEvent.startDate, partySize, true);
+        return this._renderSingle(selectedRestaurant, state.currentEvent.startDate, partySize);
       }
     }
-    _renderSingle(restaurant, date, partySize, showTimePicker) {
+    _renderSingle(restaurant, date, partySize) {
       let restaurantId = restaurant.id || "";
       let times = this.makeUpReservationTimes(restaurantId, partySize, date, 5);
       let timePicker = {date};
@@ -234,7 +242,7 @@ ${styles}
         subId: restaurantId,
         timePicker: {
           $template: 'time-picker',
-          models: showTimePicker ? [timePicker] : []
+          models: [timePicker]
         },
         availableTimes: {
           $template: 'available-times',

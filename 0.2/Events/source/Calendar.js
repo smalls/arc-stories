@@ -199,8 +199,12 @@ ${styles}
       return template;
     }
     _willReceiveProps(props, state) {
-      const event = props.event;
-      this._savedStartDate = event && event.startDate || '';
+      const event = Object.assign({}, props.event && props.event.rawData || {});
+      this._event = event;
+      this._savedStartDate = event.startDate || (new Date()).toJSON().slice(0,16);
+      if (!event.availability) {
+        this._storeNewEvent(this._savedStartDate);
+      }
     }
     _render(props, state) {
       const events = this._getEventsForDate(this._savedStartDate);
@@ -223,20 +227,24 @@ ${styles}
     }
     _getEventsForDate(dateString) {
       const date = new Date(dateString);
+      let calendar;
       switch (date.getDay()) {
         case 0:
-          return [
+          calendar = [
             {
               name: 'Sleep in',
-              style: this._getStyleForTimeBlock('06:00', 180)
+              time: '06:00',
+              length: 180
             },
             {
               name: 'Brunch',
-              style: this._getStyleForTimeBlock('11:00', 60)
+              time: '11:00',
+              length: 60
             },
             {
               name: 'Dinner',
-              style: this._getStyleForTimeBlock('19:00', 60)
+              time: '19:00',
+              length: 60
             }
           ];
         case 1:
@@ -245,32 +253,75 @@ ${styles}
           return [
             {
               name: 'Drop off dry cleaning',
-              style: this._getStyleForTimeBlock('08:00', 60)
+              time: '08:00',
+              length: 60
             },
             {
               name: 'Meeting',
-              style: this._getStyleForTimeBlock('10:00', 90)
+              time: '10:00',
+              length: 90
             },
             {
               name: 'Work time',
-              style: this._getStyleForTimeBlock('15:00', 120)
+              time: '15:00',
+              length: 120
             }
           ];
         default:
           return [
             {
               name: 'Running club',
-              style: this._getStyleForTimeBlock('07:00', 90)
+              time: '07:00',
+              length: 90
             },
             {
               name: 'Meeting',
-              style: this._getStyleForTimeBlock('14:00', 90)
+              time: '14:00',
+              length: 90
             },
             {
               name: 'Pick up dry cleaning',
-              style: this._getStyleForTimeBlock('17:00', 60)
+              time: '17:00',
+              length: 60
             }
           ];
+      }
+
+      calendar.forEach(event => event.style = this._getStyleForTimeBlock(event.time, event.length));
+
+      return calendar;
+    }
+    _findConflicts(startTime) {
+      const calendar = this._getEventsForDate(startTime);
+
+      const t = new Date(startTime);
+      const startMinute = t.getHours()*60 + t.getMinutes();
+
+      return calendar.filter(event => {
+        const eventStart = this._convertStartTimeToMinutes(event.time);
+
+        return (eventStart <= startMinute) && (eventStart + event.length >= startMinute);
+      });
+    }
+    _generateHumanReadableTime(time) {
+      const timeString = time.slice(11, 16);
+
+      const now = new Date();
+      const t = new Date(time);
+
+      now.setHours(0);
+      t.setHours(0);
+
+      const delta = Math.floor((t.getTime() - now.getTime())/86400000);
+
+      switch (delta) {
+        case 0:
+          return `at ${timeString}`;
+        case 1:
+          return `tomorrow, at ${timeString}`;
+        default:
+          const day = t.toString().slice(0, now.getFullYear() === t.getFullYear() ? 10 : 15);
+          return `at ${timeString} on ${day}`
       }
     }
     _convertStartTimeToMinutes(startTime) {
@@ -307,10 +358,14 @@ ${styles}
     }
     _storeNewEvent(startDate) {
       const event = this._views.get('event');
-      event.set(new event.entityClass({
+      const conflicts = this._findConflicts(startDate);
+      const newEvent = Object.assign({}, (this._event || {}), {
         startDate: startDate,
-        endDate: startDate
-      }));
+        endDate: startDate,
+        availability: conflicts.length ? `busy with ${conflicts[0].name}` : 'free',
+        humanReadableTime: this._generateHumanReadableTime(startDate)
+      });
+      event.set(new event.entityClass(newEvent));
     }
   };
 
