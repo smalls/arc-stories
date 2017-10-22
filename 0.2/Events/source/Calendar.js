@@ -199,9 +199,9 @@ ${styles}
       return template;
     }
     _willReceiveProps(props, state) {
-      const event = props.event;
+      const event = Object.assign({}, props.event && props.event.rawData || {});
       this._event = event;
-      this._savedStartDate = event && event.startDate || (new Date()).toJSON().slice(0,16);
+      this._savedStartDate = event.startDate || (new Date()).toJSON().slice(0,16);
       if (!event.availability) {
         this._storeNewEvent(this._savedStartDate);
       }
@@ -304,15 +304,15 @@ ${styles}
       });
     }
     _generateHumanReadableTime(time) {
-      const timeString = time.slice(12, 16);
+      const timeString = time.slice(11, 16);
 
       const now = new Date();
-      const t = new Date(t);
+      const t = new Date(time);
 
       now.setHours(0);
       t.setHours(0);
 
-      const delta = (t.getTime() - now.getTime())/86400000;
+      const delta = Math.floor((t.getTime() - now.getTime())/86400000);
 
       switch (delta) {
         case 0:
