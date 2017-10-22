@@ -136,10 +136,14 @@ ${styles}
         if (when.getHours() >= 22) {
           when.setDate(when.getDate() + 1);
           when.setHours(19);
+          when.setMinutes(0);
         } else if (when.getHours() < 17) {
-          when.setHours(18);
+          when.setHours(19);
+          when.setMinutes(0);
+        } else {
+          when.setMinutes(when.getMinutes() + 15);
+          when.setMinutes(when.getMinutes() > 30 ? 60 : 30);
         }
-        when.setMinutes(when.getMinutes() > 30 ? 60 : 30);
         when.setSeconds(0);
         when.setMilliseconds(0);
 
