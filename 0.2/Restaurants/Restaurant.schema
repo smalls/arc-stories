@@ -17,3 +17,4 @@ schema Restaurant extends Thing
     Text photo
     Text rating
     Text address
+    Text identifier # technically part of Thing
