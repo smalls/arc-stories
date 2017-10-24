@@ -13,3 +13,12 @@ recipe
   FavoriteFoodPicker
     food = food
     person <- person
+
+import 'AvatarPicker.manifest'
+
+recipe
+  create #avatar as avatar
+  use #identity as person
+  AvatarPicker
+    avatar = avatar
+    person <- person

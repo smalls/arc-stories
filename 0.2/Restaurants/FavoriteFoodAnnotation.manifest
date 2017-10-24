@@ -11,6 +11,5 @@ import '../Identity/FavoriteFood.schema'
 
 particle FavoriteFoodAnnotation in 'source/FavoriteFoodAnnotation.js'
   FavoriteFoodAnnotation(in [Restaurant] restaurants, in FavoriteFood food)
-  affordance dom
   consume set of annotation
   description `check restaurants for ${food._name_} food: ${food.food}`
