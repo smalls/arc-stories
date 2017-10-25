@@ -89,6 +89,15 @@ ${style}
           }
         };
       });
+      items.unshift({
+        index: -1,
+        description: 'New Arc',
+        icon: 'star',
+        href: '?arc=*',
+        iconStyle: {
+          color: 'black'
+        }
+      });
       this._setState({items});
     }
     _shouldRender(props, state) {
