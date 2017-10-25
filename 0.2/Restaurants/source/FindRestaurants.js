@@ -61,6 +61,7 @@ defineParticle(({DomParticle, resolver}) => {
           photos: p.photos,
           address: p.vicinity,
           rating: p.rating,
+          identifier: p.place_id,
           photo
         });
         restaurants.store(e);
