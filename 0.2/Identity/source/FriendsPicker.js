@@ -10,7 +10,7 @@
 
 defineParticle(({DomParticle, resolver}) => {
 
-  let host = `avatar-picker`;
+  let host = `friends-picker`;
 
   let styles = `
 <style>
@@ -41,12 +41,15 @@ defineParticle(({DomParticle, resolver}) => {
 ${styles}
 
 <div ${host}>
+  <hr>
   <div>{{avatars}}</div>
 </div>
 
 <template avatars>
   <div item>
-    <img selected$="{{selected}}" src="{{url}}" value="{{value}}" on-Click="_onSelectAvatar">
+    <img selected$="{{selected}}" src="{{url}}" key="{{key}}" value="{{value}}" on-Click="_onSelectAvatar">
+    <br>
+    <span>{{name}}</span>
   </div>
 </template>
 
@@ -57,17 +60,18 @@ ${styles}
       return template;
     }
     _render(props, state) {
-      let avatar = props.avatar || 0;
-      let avatars = [];
-      for (let i=0; i<72; i++) {
-        let url = `https://$cdn/assets/avatars/user (${i+1}).png`;
-        avatars.push({
-          index: i,
-          url: resolver && resolver(url),
-          value: url,
-          selected: (url === avatar.url)
-        });
-      }
+      let friends = props.friends || [];
+      let people = props.people || [];
+      let avatars = people.map((p, i) => {
+        let avatar = p.avatar || `https://$cdn/assets/avatars/user (${i+1}).png`;
+        return {
+          key: i,
+          value: p.name,
+          name: p.name,
+          url: resolver && resolver(avatar),
+          selected: Boolean(friends.find(f => f.name === p.name))
+        };
+      })
       return {
         avatars: {
           $template: 'avatars',
@@ -76,9 +80,14 @@ ${styles}
       };
     }
     _onSelectAvatar(e, state) {
-      //console.log('avatar: ', e.data.value);
-      const avatar = this._views.get('avatar');
-      avatar.set(new avatar.entityClass({url: e.data.value}));
+      let selectedName = e.data.value;
+      let friend = this._props.friends.find(f => f.name === selectedName);
+      let friendsView = this._views.get('friends');
+      if (friend) {
+        friendsView.remove(friend);
+      } else {
+        friendsView.store(new friendsView.entityClass({name: selectedName}));
+      }
     }
   };
 

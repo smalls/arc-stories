@@ -22,3 +22,14 @@ recipe
   AvatarPicker
     avatar = avatar
     person <- person
+
+import 'FriendsPicker.manifest'
+
+recipe
+  create #friends as friends
+  use #identity as person
+  use #identities as people
+  FriendsPicker
+    person <- person
+    friends = friends
+    people <- people
