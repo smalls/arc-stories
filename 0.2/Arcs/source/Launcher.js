@@ -81,11 +81,11 @@ ${style}
       let items = props.arcs.map((a, i) => {
         return {
           index: i,
+          href: a.href,
           description: a.description,
           icon: a.icon,
-          href: a.href,
           iconStyle: {
-            color: ['darkred','darkblue','darkgreen','darkorange','black'][Math.floor(Math.random()*5)]
+            color: a.color || 'gray'
           }
         };
       });
