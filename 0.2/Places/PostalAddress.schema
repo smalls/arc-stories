@@ -6,7 +6,10 @@
 # subject to an additional IP rights grant found at
 # http://polymer.github.io/PATENTS.txt
 
-#import 'https://schema.org/Thing'
-#import 'https://schema.org/Event'
-#import 'https://schema.org/Person'
-#import 'https://schema.org/Place'
+schema PostalAddress
+  optional
+    Text streetAddress
+    Text addressLocality
+    Text addressRegion
+    Text postalCode
+    Text addressCountry

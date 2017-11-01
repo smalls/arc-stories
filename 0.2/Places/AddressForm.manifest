@@ -6,7 +6,8 @@
 # subject to an additional IP rights grant found at
 # http://polymer.github.io/PATENTS.txt
 
-import 'http://schema.org/PostalAddress'
+#import 'http://schema.org/PostalAddress'
+import 'PostalAddress.schema'
 
 particle AddressForm in 'source/AddressForm.js'
   AddressForm(inout PostalAddress address)
