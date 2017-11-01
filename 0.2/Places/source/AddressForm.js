@@ -21,7 +21,7 @@ defineParticle(({DomParticle, resolver}) => {
   }
   [${host}] > cx-input {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 40px;
   }
 </style>
   `;

@@ -41,11 +41,11 @@ defineParticle(({DomParticle, resolver}) => {
 ${styles}
 
 <div ${host}>
-  <hr>
   <div>{{avatars}}</div>
+  <hr>
 </div>
 
-<template avatars>
+<template friend-avatars>
   <div item>
     <img selected$="{{selected}}" src="{{url}}" key="{{key}}" value="{{value}}" on-Click="_onSelectAvatar">
     <br>
@@ -60,8 +60,9 @@ ${styles}
       return template;
     }
     _render(props, state) {
+      let user = props.person || {};
       let friends = props.friends || [];
-      let people = props.people || [];
+      let people = (props.people || []).filter(p => p.id !== user.id);
       let avatars = people.map((p, i) => {
         let avatar = p.avatar || `https://$cdn/assets/avatars/user (${i+1}).png`;
         return {
@@ -74,7 +75,7 @@ ${styles}
       })
       return {
         avatars: {
-          $template: 'avatars',
+          $template: 'friend-avatars',
           models: avatars
         }
       };
