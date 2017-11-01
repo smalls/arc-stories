@@ -14,7 +14,10 @@ defineParticle(({DomParticle, resolver}) => {
 
   let styles = `
 <style>
-  [${host}] {
+  [${host}] > div {
+    max-height: 400px;
+    overflow-x: hidden;
+    overflow-y: scroll;
   }
   [${host}] [item] {
     display: inline-block;
@@ -42,6 +45,7 @@ ${styles}
 
 <div ${host}>
   <div>{{avatars}}</div>
+  <hr>
 </div>
 
 <template avatars>
