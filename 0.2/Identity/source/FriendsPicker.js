@@ -67,12 +67,12 @@ ${styles}
         let avatar = p.avatar || `https://$cdn/assets/avatars/user (${i+1}).png`;
         return {
           key: i,
-          value: p.name,
+          value: p.id,
           name: p.name,
           url: resolver && resolver(avatar),
-          selected: Boolean(friends.find(f => f.name === p.name))
+          selected: Boolean(friends.find(f => f.id === p.id))
         };
-      })
+      });
       return {
         avatars: {
           $template: 'friend-avatars',
@@ -81,13 +81,13 @@ ${styles}
       };
     }
     _onSelectAvatar(e, state) {
-      let selectedName = e.data.value;
-      let friend = this._props.friends.find(f => f.name === selectedName);
+      let selectedId = e.data.value;
+      let friend = this._props.friends.find(f => f.id === selectedId);
       let friendsView = this._views.get('friends');
       if (friend) {
         friendsView.remove(friend);
       } else {
-        friendsView.store(new friendsView.entityClass({name: selectedName}));
+        friendsView.store(new friendsView.entityClass({id: selectedId}));
       }
     }
   };
