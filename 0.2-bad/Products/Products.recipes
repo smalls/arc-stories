@@ -1,0 +1,57 @@
+# Copyright (c) 2017 Google Inc. All rights reserved.
+# This code may only be used under the BSD style license found at
+# http://polymer.github.io/LICENSE.txt
+# Code distributed by Google as part of this project is also
+# subject to an additional IP rights grant found at
+# http://polymer.github.io/PATENTS.txt
+
+view DefaultProducts of [Product] #shortlist in 'data/empty.json'
+view Somebody of Person in 'data/people.json'
+
+import 'https://$cdn/artifacts/Products/GiftList.manifest'
+import 'https://$cdn/artifacts/Products/Arrivinator.manifest'
+
+recipe
+  map as person
+  GiftList
+    person <- person
+  Arrivinator
+
+import 'https://$cdn/artifacts/Products/ShowProducts.manifest'
+
+recipe
+  copy #shortlist as shortlist
+  map Somebody as person
+  ShowProducts
+    list <- shortlist
+  GiftList
+    person <- person
+  Arrivinator
+    list <- shortlist
+
+import 'https://$cdn/artifacts/Products/Chooser.manifest'
+import 'https://$cdn/artifacts/Products/Recommend.manifest'
+import 'https://$cdn/artifacts/Products/AlsoOn.manifest'
+
+recipe
+  map #wishlist as wishlist
+  use as shortlist
+  Recommend
+    known <- shortlist
+    population <- wishlist
+  Chooser
+    resultList = shortlist
+    choices <- Recommend.recommendations
+  AlsoOn
+    list <- shortlist
+    choices <- Recommend.recommendations
+
+import 'Poweronics.manifest'
+import 'https://$cdn/artifacts/Products/ManufacturerInfo.manifest'
+
+recipe
+  use as shortlist
+  ManufacturerInfo
+    list <- shortlist
+  Poweronics
+    list <- shortlist
