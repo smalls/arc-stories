@@ -16,6 +16,15 @@ defineParticle(({DomParticle}) => {
 
   let style = html`
 <style>
+  [${host}] .material-icons {
+    font-family: 'Material Icons';
+    font-size: 24px;
+    font-style: normal;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+    vertical-align: middle;
+    cursor: pointer;
+  }
   [${host}] [banner] {
     font-size: 16px;
     font-weight: bold;

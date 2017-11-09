@@ -117,9 +117,5 @@ defineParticle(({DomParticle, resolver}) => {
         };
       });
     }
-    addMessage(msg) {
-      const Message = this._views.get('messages').entityClass;
-      this._views.get('messages').store(new Message(msg));
-    }
   };
 });

@@ -7,11 +7,10 @@
 # http://polymer.github.io/PATENTS.txt
 
 schema Message
-  normative
-    Text name
-    Text userid
-    Text content
   optional
+    Text userid
+    Text name
+    Text content
     Text type
     Text sender
     Text time
