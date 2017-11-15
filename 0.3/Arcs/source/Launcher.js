@@ -115,6 +115,7 @@ ${style}
     _willReceiveProps(props) {
       let items = [], profileItems = [];
       props.arcs.forEach((a, i) => {
+        // each item goes in either the `items` or `profileItems` list
         let list = a.profile ? profileItems : items;
         let blurb = a.description.length > 70 ? a.description.slice(0, 70) + '...' : a.description;
         list.push({
@@ -127,16 +128,6 @@ ${style}
             color: a.color || 'gray'
           }
         });
-      });
-      items.unshift({
-        index: -1,
-        blurb: 'New Arc',
-        description: 'New Arc',
-        icon: 'star',
-        href: '?arc=*',
-        iconStyle: {
-          color: 'black'
-        }
       });
       this._setState({items, profileItems});
     }
@@ -160,8 +151,9 @@ ${style}
       };
     }
     _onDelete(e) {
-      let key = e.data.key;
-      this._views.get('arcs').remove(this._props.arcs[key]);
+      if (e.data.key > 0) {
+        this._views.get('arcs').remove(this._props.arcs[e.data.key]);
+      }
     }
   };
 
