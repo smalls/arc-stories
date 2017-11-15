@@ -18,29 +18,22 @@ defineParticle(({DomParticle}) => {
     display: flex;
     flex-direction: column;
     font-family: sans-serif;
-    font-size: 16px;
   }
-  [${host}] [compose] div {
+  /*[${host}] [compose] div {
     padding-bottom: 4px;
-  }
+  }*/
   [${host}] [compose] input {
-    padding: 16px;
-    font-size: 1.5em;
+    padding: 8px 12px;
+    margin: 8px;
     box-sizing: border-box;
-    width: 100%;
+    width: calc(100% - 20px);
   }
 </style>
 
 <div ${host}>
-<!--
-  <div>
-    <button on-click="onClearChat">Clear Chat</button>
-  </div>
-  <div><hr></div>
--->
   <div compose>
-    <div><b>{{name}}</b> says</div>
-    <input on-change="onMessageChange" value="{{message}}">
+    <!--<div><b>{{name}}</b> says</div>-->
+    <input on-change="onMessageChange" placholder="{{placeholder}}" value="{{message}}">
   </div>
 </div>
   `.trim();
@@ -53,8 +46,9 @@ defineParticle(({DomParticle}) => {
       let {messages, user} = props;
       if (messages && user) {
       	return {
+          placeholder: `${user.name} says`,
           message: '',
-          name: user.name,
+          name: user.name
       	};
       }
     }
@@ -70,7 +64,7 @@ defineParticle(({DomParticle}) => {
         this.addMessage({
           content: e.data.value,
           name: this.userName,
-          time: new Date().toLocaleString()
+          time: new Date().toLocaleTimeString()
         });
         this._setState({message: ''});
       }

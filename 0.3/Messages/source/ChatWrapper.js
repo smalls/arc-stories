@@ -14,7 +14,7 @@ defineParticle(({DomParticle, resolver}) => {
 
   const template = `
 
-  <style>
+<style>
   [${host}] {
     border-bottom: 1px solid silver;
   }
@@ -23,9 +23,18 @@ defineParticle(({DomParticle, resolver}) => {
     align-items: center;
   }
   [${host}] > [header] i {
-    padding: 16px;
+    padding: 11px 8px 8px 8px;
     vertical-align: middle;
     user-select: none;
+  }
+  [${host}] .material-icons {
+    font-family: 'Material Icons';
+    font-size: 24px;
+    font-style: normal;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+    vertical-align: middle;
+    cursor: pointer;
   }
   [${host}] > [header] [message] {
     flex: 1;
@@ -38,9 +47,9 @@ defineParticle(({DomParticle, resolver}) => {
   [${host}] > [header] [message] {
     background-color: lightblue;
     box-sizing: border-box;
-    padding: 16px;
+    padding: 6px 12px;
     margin: 0 16px;
-    border-radius: 8px;
+    border-radius: 16px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -56,6 +65,13 @@ defineParticle(({DomParticle, resolver}) => {
   [${host}] > [header] img[show] {
     opacity: 1;
   }
+  /*
+  [${host}] > [chat] {
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 400px;
+  }
+  */
   [${host}] > [chat]:not([open]) {
     display: none;
   }
@@ -71,6 +87,7 @@ defineParticle(({DomParticle, resolver}) => {
   <div chat open$="{{open}}">
     <div slotid="chatmessages"></div>
   </div>
+  <div slotid="compose"></div>
 </div>
 
   `.trim();
@@ -96,7 +113,7 @@ defineParticle(({DomParticle, resolver}) => {
       // Last points to the last non-custom message.
       // TODO(noelutz): expose a custom slot to render the last message properly even
       // if it's a custom message.
-      let last = count && [...messages].reverse().find(m => !m.type);
+      let last = count && messages.reverse().find(m => !m.type);
       if (state.open) {
         state.animations = [];
         state.showing = null;
@@ -115,6 +132,7 @@ defineParticle(({DomParticle, resolver}) => {
           // get the next pending thing to show
           state.showing = state.animations.shift();
           if (state.showing) {
+            state.content = state.showing.content;
             console.log(...chatPre, `show new message, dismiss in a few seconds`);
             // make it go away in a bit
             clearTimeout(state.timeout);
@@ -134,9 +152,8 @@ defineParticle(({DomParticle, resolver}) => {
           }
         }
       }
-      let avatar, content;
+      let avatar;
       if (state.showing) {
-        content = state.showing.content;
         let sender = people.find(p => p.name === state.showing.name);
         avatar = sender && sender.avatar;
       }
@@ -147,7 +164,7 @@ defineParticle(({DomParticle, resolver}) => {
         open: Boolean(state.open),
         messageCount: `(${count})`,
         show: !state.open && Boolean(state.showing),
-        message: content || '',
+        message: state.content || '',
         avatar: state.avatar
       };
     }

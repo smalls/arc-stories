@@ -19,20 +19,22 @@ defineParticle(({DomParticle, resolver}) => {
     flex-direction: column;
     font-family: sans-serif;
     font-size: 16px;
-    padding: 20px;
+    padding: 0 20px;
+    max-height: 400px;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
   [${host}] [list] {
     flex: 1;
-    overflow: auto;
   }
   [${host}] [avatar] img {
-    height: 32px;
+    height: 1.5em;
     border-radius: 100%;
     vertical-align: middle;
-    margin-right: 16px;
+    margin-right: 4px;
   }
   [${host}] [message] {
-    padding-bottom: 16px;
+    padding-bottom: 8px;
     text-align: right;
   }
   [${host}] [message][isme] {
@@ -40,33 +42,31 @@ defineParticle(({DomParticle, resolver}) => {
   }
   [${host}] [name] {
     padding: 0 8px;
-    font-size: 0.75em;
+    font-size: 0.7em;
+    min-height: 18px;
   }
   [${host}] [isme] [avatar] {
     display: none;
   }
   [${host}] [content] {
     display: inline-block;
-    font-size: 1em;
+    font-size: 0.9em;
     line-height: 1.4em;
     text-align: justify;
-    background-color: #eeeeee; /*#c5e1a5;*/
-    border-radius: 12px;
-    padding: 12px 16px;
-    margin: 4px;
+    background-color: #eeeeee;
+    border-radius: 16px;
+    padding: 4px 16px;
   }
   [${host}] [isme] [content] {
     color: #f8f8f8;
     background-color: #1873cd;
-    text-align: left;
   }
   [${host}] [iscustom] {
     display: none;
   }
 </style>
 
-<div ${host}>
-
+<div ${host} scrolltop="{{scrollTop:scrollTop}}">
   <template chat-message>
     <div message isme$="{{isme}}">
       <div name><span avatar><img src="{{src}}" title="{{name}}" alt="{{name}}"><b>{{name}}</b> - </span><i>{{blurb}}</i></div>
@@ -74,11 +74,7 @@ defineParticle(({DomParticle, resolver}) => {
       <div slotid="custom_message" subid$="{{subId}}"></div>
     </div>
   </template>
-
   <div list>{{messages}}</div>
-  <div><hr></div>
-  <div slotid="compose"></div>
-
 </div>
   `.trim();
 
@@ -93,8 +89,7 @@ defineParticle(({DomParticle, resolver}) => {
       let {messages, user, people} = props;
       if (messages && user) {
       	return {
-          message: '',
-          name: user.name,
+          scrollTop: 1e6,
           messages: {
             $template: 'chat-message',
             models: this.renderMessages(messages, user, people || [])

@@ -13,4 +13,5 @@ particle ChatWrapper in 'source/ChatWrapper.js'
   ChatWrapper(in [Message] messages, in [Person] people)
   consume toproot
     provide chatmessages
+    provide compose
   description `connect friends`

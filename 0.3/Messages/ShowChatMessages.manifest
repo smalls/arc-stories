@@ -13,7 +13,6 @@ particle ShowChatMessages in 'source/ShowChatMessages.js'
   ShowChatMessages(in [Person] people, in Person user, inout [Message] messages)
   consume chatmessages
     provide preamble
-    provide compose
     provide set of custom_message
       view messages
   description `see messages`
