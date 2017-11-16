@@ -17,3 +17,34 @@ recipe
 #  map #identities as people
 #  PersonList
 #    people <- people
+
+import 'FavoriteFoodPicker.manifest'
+
+recipe
+  create #favorite as food
+  map #user as person
+  FavoriteFoodPicker
+    food = food
+    person <- person
+
+import 'AvatarPicker.manifest'
+
+recipe
+  create #avatar as avatar
+  use #user as person
+  AvatarPicker
+    avatar = avatar
+    person <- person
+
+import 'FriendsPicker.manifest'
+
+recipe
+  create #friends as friends
+  use #user as person
+  use #identities as people
+  map #friends_avatar as avatars
+  FriendsPicker
+    person <- person
+    friends = friends
+    people <- people
+    avatars <- avatars

@@ -28,10 +28,10 @@ defineParticle(({DomParticle, resolver}) => {
     flex: 1;
   }
   [${host}] [avatar] img {
-    height: 1.5em;
+    height: 32px;
     border-radius: 100%;
     vertical-align: middle;
-    margin-right: 4px;
+    margin: 0 8px;
   }
   [${host}] [message] {
     padding-bottom: 8px;
@@ -41,12 +41,12 @@ defineParticle(({DomParticle, resolver}) => {
     text-align: left;
   }
   [${host}] [name] {
-    padding: 0 8px;
+    padding: 8px;
     font-size: 0.7em;
     min-height: 18px;
   }
   [${host}] [isme] [avatar] {
-    display: none;
+    /*display: none;*/
   }
   [${host}] [content] {
     display: inline-block;
@@ -69,7 +69,7 @@ defineParticle(({DomParticle, resolver}) => {
 <div ${host} scrolltop="{{scrollTop:scrollTop}}">
   <template chat-message>
     <div message isme$="{{isme}}">
-      <div name><span avatar><img src="{{src}}" title="{{name}}" alt="{{name}}"><b>{{name}}</b> - </span><i>{{blurb}}</i></div>
+      <div name><span avatar><b>{{name}}</b><img src="{{src}}" title="{{name}}" alt="{{name}}"></span><i>{{blurb}}</i></div>
       <div content iscustom$="{{iscustom}}">{{content}}</div>
       <div slotid="custom_message" subid$="{{subId}}"></div>
     </div>
@@ -86,21 +86,21 @@ defineParticle(({DomParticle, resolver}) => {
       return this._props.user && this._props.user.name || '';
     }
     _render(props) {
-      let {messages, user, people} = props;
+      let {messages, user, avatars} = props;
       if (messages && user) {
       	return {
           scrollTop: 1e6,
           messages: {
             $template: 'chat-message',
-            models: this.renderMessages(messages, user, people || [])
+            models: this.renderMessages(messages, user, avatars || [])
           }
       	};
       }
     }
-    renderMessages(messages, user, people) {
+    renderMessages(messages, user, avatars) {
       return messages.map((m, i) => {
-        let sender = people.find(p => p.name === m.name);
-        let avatar = sender && sender.avatar || 'user.jpg';
+        let avatar = avatars.find(a => a.owner == m.userid);
+        let src = avatar ? avatar.url : `https://$cdn/assets/avatars/user.jpg`;
         return {
           iscustom: Boolean(m.type && m.type.length),
           content: m.content,
@@ -108,7 +108,7 @@ defineParticle(({DomParticle, resolver}) => {
           subId: i,
           blurb: m.time || '',
           isme: m.name === user.name,
-          src: resolver(`https://$cdn/assets/avatars/${avatar}`)
+          src: resolver(src)
         };
       });
     }

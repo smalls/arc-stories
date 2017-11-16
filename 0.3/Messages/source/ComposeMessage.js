@@ -48,22 +48,22 @@ defineParticle(({DomParticle}) => {
       	return {
           placeholder: `${user.name} says`,
           message: '',
-          name: user.name
+          name: user.name,
+          userid: user.id
       	};
       }
-    }
-    get userName() {
-      return this._props.user && this._props.user.name || '';
     }
     addMessage(msg) {
       const Message = this._views.get('messages').entityClass;
       this._views.get('messages').store(new Message(msg));
     }
     onMessageChange(e) {
-      if (e.data.value) {
+      let user = this._props.user;
+      if (e.data.value && user) {
         this.addMessage({
           content: e.data.value,
-          name: this.userName,
+          name: user.name,
+          userid: user.id,
           time: new Date().toLocaleTimeString()
         });
         this._setState({message: ''});

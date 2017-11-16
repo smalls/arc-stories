@@ -105,10 +105,10 @@ defineParticle(({DomParticle, resolver}) => {
       };
     }
     _shouldRender(props) {
-      return props.messages && props.people;
+      return props.messages && props.avatars;
     }
     _render(props, state) {
-      let {messages, people} = props;
+      let {messages, avatars} = props;
       let count = messages && messages.length;
       // Last points to the last non-custom message.
       // TODO(noelutz): expose a custom slot to render the last message properly even
@@ -154,11 +154,10 @@ defineParticle(({DomParticle, resolver}) => {
       }
       let avatar;
       if (state.showing) {
-        let sender = people.find(p => p.name === state.showing.name);
-        avatar = sender && sender.avatar;
+        avatar = avatars.find(a => a.owner === state.showing.userid);
       }
       if (!state.avatar || avatar) {
-        state.avatar = resolver(`https://$cdn/assets/avatars/${avatar || 'user.jpg'}`);
+        state.avatar = resolver(avatar ? avatar.url : `https://$cdn/assets/avatars/user.jpg`);
       }
       return {
         open: Boolean(state.open),

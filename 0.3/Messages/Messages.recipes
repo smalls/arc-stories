@@ -15,13 +15,13 @@ import 'ComposeMessage.manifest'
 
 recipe
   create #chat as messages
-  use #identity as user
-  use #identities as people
+  map #friends_avatar as avatars
+  use #user as user
   ChatWrapper
     messages <- messages
-    people <- people
+    avatars <- avatars
   ShowChatMessages
-    people <- people
+    avatars <- avatars
     messages = messages
     user <- user
   ComposeMessage

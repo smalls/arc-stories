@@ -26,10 +26,9 @@ defineParticle(({DomParticle}) => {
     cursor: pointer;
   }
   [${host}] [banner] {
-    font-size: 16px;
-    font-weight: bold;
-    background-color: #ffd54f;
-    padding: 16px;
+    font-size: 24px;
+    background-color: #ffe082;
+    padding: 32px 16px 8px 16px;
   }
   [${host}] [arc-item] {
     display: inline-block;
@@ -78,11 +77,11 @@ defineParticle(({DomParticle}) => {
 ${style}
 
 <div ${host}>
-  <div banner>Quick Hits</div>
+  <div banner style="background-color: #ffe082;">Quick Hits</div>
   <div>{{arcs}}</div>
-  <div banner style="background-color: #4fc3f7;">Profile</div>
+  <div banner style="background-color: #90caf9;">Profile</div>
   <div>{{profiles}}</div>
-  <div banner>More</div>
+  <div banner style="background-color: #ffe082;">More</div>
   <div>{{tail}}</div>
 </div>
 
