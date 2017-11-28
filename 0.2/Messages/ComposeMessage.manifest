@@ -12,4 +12,3 @@ import 'Message.schema'
 particle ComposeMessage in 'source/ComposeMessage.js'
   ComposeMessage(in Person user, inout [Message] messages)
   consume compose
-  description `compose messages`

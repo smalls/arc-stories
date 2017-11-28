@@ -16,4 +16,3 @@ particle ShowChatMessages in 'source/ShowChatMessages.js'
     provide compose
     provide set of custom_message
       view messages
-  description `see messages`
