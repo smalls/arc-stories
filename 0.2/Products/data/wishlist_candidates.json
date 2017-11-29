@@ -4,7 +4,7 @@
     "category": "Books",
     "seller": "denile.com",
     "price": "$14.50",
-    "shipDays": 7,
+    "shipDays": 4,
     "image": "assets/products/book.png"
   },
   {
@@ -12,7 +12,7 @@
     "category": "Tools",
     "seller": "denile.com",
     "price": "$59.00",
-    "shipDays": 42,
+    "shipDays": 5,
     "image": "assets/products/powertool.png"
   },
   {

@@ -5,8 +5,8 @@
 # subject to an additional IP rights grant found at
 # http://polymer.github.io/PATENTS.txt
 
-import 'https://$cdn/artifacts/ShowProducts/ShowProducts.manifest'
-import 'https://$cdn/artifacts/Chooser/Chooser.manifest'
+import 'https://$cdn/artifacts/Products/Chooser.manifest'
+import 'https://$cdn/artifacts/Products/ShowProducts.manifest'
 
 view WishlistCandidates of [Product] in 'data/wishlist_candidates.json'
   description `wishlist candidates`
@@ -14,9 +14,13 @@ view WishlistCandidates of [Product] in 'data/wishlist_candidates.json'
 # Make a wish
 recipe
   map WishlistCandidates as candidates
+  map #shortlist as shortlist
   create #wishlist as wishlist
   Chooser
     resultList = wishlist
     choices <- candidates
+  Chooser
+    resultList = wishlist
+    choices <- shortlist
   ShowProducts
     list <- wishlist
