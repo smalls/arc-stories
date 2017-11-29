@@ -47,7 +47,7 @@ defineParticle(({DomParticle}) => {
   [${host}] [arc-list-item] {
     display: flex;
     align-items: center;
-    padding: 0 16px;
+    padding: 8px 16px;
     border-bottom: 1px solid silver;
   }
   [${host}] a {
