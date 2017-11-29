@@ -14,9 +14,13 @@ view WishlistCandidates of [Product] in 'data/wishlist_candidates.json'
 # Make a wish
 recipe
   map WishlistCandidates as candidates
+  map #shortlist as shortlist
   create #wishlist as wishlist
   Chooser
     resultList = wishlist
     choices <- candidates
+  Chooser
+    resultList = wishlist
+    choices <- shortlist
   ShowProducts
     list <- wishlist
