@@ -1,3 +1,4 @@
+# @license
 # Copyright (c) 2017 Google Inc. All rights reserved.
 # This code may only be used under the BSD style license found at
 # http://polymer.github.io/LICENSE.txt
@@ -5,14 +6,9 @@
 # subject to an additional IP rights grant found at
 # http://polymer.github.io/PATENTS.txt
 
-import 'People/People.recipes'
-import 'Places/Places.recipes'
-import 'Products/Products.recipes'
-import 'Restaurants/Restaurants.recipes'
-import 'Events/Events.recipes'
-import 'Messages/Messages.recipes'
+import 'Show.schema'
 
-import 'Finance/Finance.recipes'
-import 'PlaidAccounts/PlaidAccounts.recipes'
-import 'TV/TV.recipes'
-
+particle FindTVShows in 'source/FindTVShows.js'
+  FindTVShows(inout [Show] shows)
+  consume root
+  description `find TV shows`
