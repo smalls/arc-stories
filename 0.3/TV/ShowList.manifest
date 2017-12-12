@@ -6,7 +6,8 @@
 # subject to an additional IP rights grant found at
 # http://polymer.github.io/PATENTS.txt
 
-schema Show
- normative
-    Text description
-    Text image
+import 'Show.schema'
+
+particle ShowList in 'source/ShowList.js'
+  ShowList(in [Show] shows, inout Show selected)
+  consume root

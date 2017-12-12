@@ -12,22 +12,9 @@ http://api.tvmaze.com/search/shows?q=star+trek+discovery
 
 defineParticle(({DomParticle, resolver}) => {
 
-  let host = `find-tv-shows`;
-
-  let template = `
-<div ${host}>
-  <pre>{{json}}</pre>
-  <div slotid="masterdetail"></div>
-</div>
-
-  `.trim();
-
-  let service = `http://api.tvmaze.com/search/shows`;
+  const service = `http://api.tvmaze.com/search/shows`;
 
   return class extends DomParticle {
-    get template() {
-      return template;
-    }
     _willReceiveProps(props, state) {
       if (props.shows && !state.count) {
         this._fetchShows();
@@ -35,25 +22,24 @@ defineParticle(({DomParticle, resolver}) => {
     }
     async _fetchShows() {
       this._setState({count: -1});
-      let query = `star trek discovery`;
+      let query = `star trek`; 
       let response = await fetch(`${service}?q=${query}`);
       let shows = await response.json();
       this._receiveShows(shows);
     }
     _receiveShows(shows) {
-      this._setState({shows});
+      //this._setState({shows});
       //console.log("_receivePlaces = ", places.results);
-      /*
-      let shows = this._views.get('shows');
-      let Show = shows.entityClass;
-      let show = new Show({json);
-      shows.store(show);
-      */
-    }
-    _render(props, state) {
-      return {
-        json: JSON.stringify(state.shows, null, '  ')
-      };
+      let showsView = this._views.get('shows');
+      let Show = showsView.entityClass;
+      shows.forEach(show => {
+        show = show.show;
+        let entity = new Show({
+          description: show.summary,
+          image: show.image && show.image.medium || ''
+        });
+        showsView.store(entity);
+      });
     }
   };
 });
