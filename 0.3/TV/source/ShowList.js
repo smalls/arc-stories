@@ -15,7 +15,7 @@ defineParticle(({DomParticle, resolver}) => {
   let host = `show-list`;
 
   let showTemplate = `
-<div style="display: flex; padding-bottom: 8px;">
+<div style="display: flex; align-items: start; padding-bottom: 8px;">
   <img src="{{src}}" style="vertical-align: middle; padding-right: 8px;">
   <div unsafe-html="{{desc}}"></div>
 </div>
