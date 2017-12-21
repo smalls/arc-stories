@@ -10,7 +10,7 @@ schema Event
   normative
     Text endDate
     Text startDate
-    Text participants
+    Number participants
     Text description
     Text availability
     Text humanReadableTime

@@ -13,11 +13,11 @@ schema PlaidAccount
     Text user
     Text name
   optional
-    Text balanceAvailable
-    Text balanceCurrent
+    Number balanceAvailable
+    Number balanceCurrent
     Text institution_type
     Text metaName
     Text metaNumber
-    Text metaLimit
+    Number metaLimit
     Text subtype
     Text type

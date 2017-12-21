@@ -10,19 +10,24 @@ schema PlaidTransaction
   normative
     Text account
     Text id
-    Text amount
+    Number amount
     Text date
     Text name
   optional
     Text metaLocationAddress
     Text metaLocationCity
     Text metaLocationState
-    Text pending
+    Text metaLocationZip
+    Number metaLocationCoordinatesLat
+    Number metaLocationCoordinatesLon
+    Boolean pending
     Text typePrimary
     Text category0
     Text category1
+    Text category2
     Text category_id
-    Text scoreLocationAddress
-    Text scoreLocationCity
-    Text scoreLocationState
-    Text scoreName
+    Number scoreLocationAddress
+    Number scoreLocationCity
+    Number scoreLocationState
+    Number scoreLocationZip
+    Number scoreName

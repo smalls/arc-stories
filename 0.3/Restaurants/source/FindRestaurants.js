@@ -58,7 +58,6 @@ defineParticle(({DomParticle, resolver}) => {
           reference: p.reference,
           name: p.name,
           icon: p.icon,
-          photos: p.photos,
           address: p.vicinity,
           rating: p.rating,
           identifier: p.place_id,
